@@ -37,4 +37,20 @@ public class DropboxUtility {
 	    }
 	}
 
+	//Download file from dropbox
+	 public String downloadFile() throws Exception{
+
+	        login();
+	        DbxEntry.File downloadedFile;
+	        FileOutputStream outputStream = new FileOutputStream("dropbox.pdf");
+	        try 
+	        {
+	        	downloadedFile= client.getFile("/dropbox.pdf", null,
+	                outputStream);
+	            System.out.println("Metadata: " + downloadedFile.toString());
+	        } finally {
+	            outputStream.close();
+	        }
+	        return downloadedFile.toString();
+	    }
 }
