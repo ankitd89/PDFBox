@@ -1,4 +1,5 @@
 import com.dropbox.core.*;
+
 import java.util.Locale;
 import java.io.*;
 
@@ -52,5 +53,20 @@ public class DropboxUtility {
 	            outputStream.close();
 	        }
 	        return downloadedFile.toString();
+	    }
+	 
+	 //List the files from dropbox
+	 public String listFiles() throws Exception{
+
+	        login();
+	        DbxEntry.WithChildren listing = client.getMetadataWithChildren("/");
+	        System.out.println("Files in the root path:");
+	        String files="";
+	        for (DbxEntry child : listing.children) {
+	            System.out.println("	" + child.name + ": " + child.toString());
+	            files+=child.name+"\n";
+	        }
+	        return files;
+	        
 	    }
 }
