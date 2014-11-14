@@ -35,4 +35,14 @@ public class Auth {
 	    }catch(Exception e){}
     	return "Pdf converted to Text";
     }
+    
+    @RequestMapping(value="/dropbox/files",method=RequestMethod.GET)
+    public String RESTListFiles() 
+    {
+    	String files="";
+       try{
+    	files=dropbox.listFiles();
+       }catch(Exception e){}
+    	return files;
+    }
 }
