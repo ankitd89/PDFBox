@@ -25,6 +25,7 @@ public class PDFBoxController {
     public String RestPdfToText() {
     	ItextUtility utility = new ItextUtility();
     	utility.convertPdfToText("", ""); //TODO: Pass correct parameters after serialization and deserialization
+    	utility.buildMetaDataForFile(""); //TODO: Pass actual src
     	return "Pdf converted to Text";
     }
     
