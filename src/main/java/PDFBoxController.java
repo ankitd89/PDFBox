@@ -23,16 +23,8 @@ public class PDFBoxController {
     }
     @RequestMapping(value="/dropbox/Pdftotext",method=RequestMethod.POST)
     public String RestPdfToText() {
-    	 /** The resulting PDF. */
-	     String PDF = "revenuereport.pdf";
-	    /** A possible resulting after parsing the PDF. */
-	     String TEXT1 = "result1.txt";
-	    /** A possible resulting after parsing the PDF. */
-	     String TEXT2 = "result2.txt";
-	    try{
-    	example.parsePdf(PDF, TEXT1);
-        example.extractText(PDF, TEXT2);
-	    }catch(Exception e){}
+    	ItextUtility utility = new ItextUtility();
+    	utility.convertPdfToText("", ""); //TODO: Pass correct parameters after serialization and deserialization
     	return "Pdf converted to Text";
     }
     
