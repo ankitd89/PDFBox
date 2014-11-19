@@ -14,6 +14,7 @@ public class DropboxUtility {
 		DbxRequestConfig config = new DbxRequestConfig("cmpe_273", Locale
 				.getDefault().toString());
 		DbxWebAuthNoRedirect webAuth = new DbxWebAuthNoRedirect(config, appInfo);
+		@SuppressWarnings("unused")
 		String authorizeUrl = webAuth.start();
 		client = new DbxClient(config, accessToken);
 	}

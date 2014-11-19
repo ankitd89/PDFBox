@@ -4,6 +4,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.SortedMap;
 
+
+
+import model.Bill;
+
+
 //iText imports
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
@@ -62,7 +67,8 @@ public class ItextUtility
     	}
     }
 	
-    private void displayBillLines()
+    @SuppressWarnings("unused")
+	private void displayBillLines()
     {
     	for(int j = 0; j<=lines.size();j++)
 			System.out.println("Line "+j+":"+lines.get(j));

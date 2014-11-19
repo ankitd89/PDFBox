@@ -1,3 +1,5 @@
+package model;
+
 class Product
 {
 	String productQuantity;
