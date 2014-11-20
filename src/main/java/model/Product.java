@@ -1,10 +1,10 @@
 package model;
 
-class Product
+public class Product
 {
-	String productQuantity;
-	String productName;
-	String productPrice;
+	private String productQuantity;
+	private String productName;
+	private String productPrice;
 	
 	public String getProductQuantity() {
 		return productQuantity;

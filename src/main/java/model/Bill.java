@@ -1,6 +1,6 @@
 package model;
 import java.util.ArrayList;
-
+import org.springframework.data.annotation.Id;
 
 /*
  * @abstract: This is bill bean class
@@ -8,12 +8,14 @@ import java.util.ArrayList;
  */
 public class Bill
 {
-	String shopId;
-	String totalBillAmount;
-	ArrayList<Product> products;
-	String billDate;
-	String billTime;
-	String billRef;
+	@Id
+	private String billRef;
+	private String shopId;
+	private String totalBillAmount;
+	private ArrayList<Product> products;
+	private String billDate;
+	private String billTime;
+	
 	
 	public String getBillRef() {
 		return billRef;

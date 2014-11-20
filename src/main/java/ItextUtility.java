@@ -3,11 +3,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.SortedMap;
-
-
-
-import model.Bill;
-
+import model.*;
 
 //iText imports
 import com.itextpdf.text.pdf.PdfReader;
@@ -16,7 +12,7 @@ import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 import com.jramoyo.io.*;
 
-
+import config.MongoConfigJava;
 
 public class ItextUtility 
 {
@@ -58,7 +54,14 @@ public class ItextUtility
     		this.buildShopIdForBill();
     		this.buildBillDateAndTime();
     		this.buildBillRef();
+    		this.buildBillAmount();
+    		this.buildBillProducts();
+    		this.displayBill();
+    		
     		//this.displayBillLines();
+    		MongoConfigJava mongo = new MongoConfigJava();
+    		mongo.saveBill(bill);
+    		
     		reader.close();
     	}
     	catch(Exception e)
@@ -77,15 +80,12 @@ public class ItextUtility
     private void buildShopIdForBill()
     {
     	bill.setShopId(StringFormatter.clearShopID(lines.get(5)));  
-    	System.out.println("Shop ID retrived from receipt : "+bill.getShopId());
     }
     
     private void buildBillDateAndTime() 
     {
     	bill.setBillDate(StringFormatter.clearBillDate(lines.get(lines.size())));
 		bill.setBillTime(StringFormatter.clearBillTime(lines.get(lines.size())));
-		System.out.println("Bill date retrived from receipt : "+bill.getBillDate());
-		System.out.println("Bill time retrived from receipt : "+bill.getBillTime());
 	}
     
     private void buildBillRef() 
@@ -93,5 +93,49 @@ public class ItextUtility
     	bill.setBillRef(StringFormatter.clearBillRef(lines.get(lines.size()-9)));
     	System.out.println("Reference number retrived from receipt : "+bill.getBillRef());
 	}
+    
+    private void buildBillProducts() 
+    {
+    	int lastProductIndex = lines.size()-22;
+		int firstProductIndex = 8;
 
+		while(lastProductIndex != firstProductIndex)
+		{
+			products.add(lines.get(lastProductIndex));
+			lastProductIndex--;
+		}
+	
+		//add first product
+		products.add(lines.get(8));
+		ArrayList<Product> clearedProducts = StringFormatter.clearProductsArray(this.products);
+		
+		bill.setProducts(clearedProducts);
+	}
+
+	private void buildBillAmount() 
+    {
+    	//There can be many items between line 8th(inclusive) and 18th(inclusive)
+		//Get the total bill, lines.size()-18 is the line from bottom that will give us the total amount
+    	for(int i = lines.size();;i--)
+			if(i == lines.size()-18)
+			{
+				bill.setTotalBillAmount(StringFormatter.clearTotalAmount(lines.get(lines.size()-18)));
+				break;
+			}
+	}
+
+	private void displayBill()
+    {
+    	System.out.println("Bill total is :" + this.bill.getTotalBillAmount());
+    	System.out.println("Bill shop id is :" + this.bill.getShopId());	    	
+    	System.out.println("Bill date is: "+ this.bill.getBillDate());
+    	System.out.println("Bill date is: "+ this.bill.getBillTime());
+    	System.out.println("Bill Ref is: "+ this.bill.getBillRef());
+    	
+		for(int i = 0; i<=this.bill.getProducts().size();i++)
+		{
+			Product p = bill.getProducts().get(i);
+			System.out.println(":"+p.getProductQuantity()+":"+p.getProductName()+":"+p.getProductPrice());	
+			}
+    }
 }
