@@ -19,7 +19,9 @@ import java.io.FileOutputStream;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import java.util.Iterator;
+import javax.servlet.http.HttpServletResponse;
 @RestController
 public class PDFBoxController {
 	DropboxUtility dropbox=new DropboxUtility();
@@ -29,27 +31,50 @@ public class PDFBoxController {
     
  
     @RequestMapping(value="/dropbox/upload",method=RequestMethod.POST)
-    	 public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
-    	            @RequestParam("file") MultipartFile file){
-    	        if (!file.isEmpty()) {
+    	 public @ResponseBody String handleFileUpload(MultipartHttpServletRequest request, HttpServletResponse response){
+    	Iterator<String> itr =  request.getFileNames();
+    	 
+         MultipartFile file = request.getFile(itr.next());       
+    	if (!file.isEmpty()) {
     	            try {
     	            	
     	                byte[] bytes = file.getBytes();
     	                BufferedOutputStream stream =
-    	                        new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
+    	                        new BufferedOutputStream(new FileOutputStream(new File("./src/main/webapp/resources/images/"+file.getOriginalFilename())));
     	                stream.write(bytes);
     	                stream.close();
     	                System.out.println(file.getOriginalFilename());
-    	                dropbox.uploadFile(file.getOriginalFilename());
-    	                return "You successfully uploaded receipt to dropbox !";
+    	                dropbox.uploadFile("./src/main/webapp/resources/images/"+file.getOriginalFilename());
+    	                return "upload success!!";
     	            } catch (Exception e) {
-    	                return "You failed to upload " + name + " => " + e.getMessage();
+    	                return "You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage();
     	            }
     	        } else {
-    	            return "You failed to upload " + name + " because the file was empty.";
+    	            return "You failed to upload " + file.getOriginalFilename() + " because the file was empty.";
     	        }
     }
     
+    @RequestMapping(value="/dropbox/upload1",method=RequestMethod.POST)
+	 public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
+	            @RequestParam("file") MultipartFile file){
+	        if (!file.isEmpty()) {
+	            try {
+	            	
+	                byte[] bytes = file.getBytes();
+	                BufferedOutputStream stream =
+	                        new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
+	                stream.write(bytes);
+	                stream.close();
+	                System.out.println(file.getOriginalFilename());
+	                dropbox.uploadFile(file.getOriginalFilename());
+	                return "You successfully uploaded receipt to dropbox !";
+	            } catch (Exception e) {
+	                return "You failed to upload " + name + " => " + e.getMessage();
+	            }
+	        } else {
+	            return "You failed to upload " + name + " because the file was empty.";
+	        }
+}
     @RequestMapping(value="/dropbox/download",method=RequestMethod.GET)
     public String RESTDownload() {
     	String metadata="";
