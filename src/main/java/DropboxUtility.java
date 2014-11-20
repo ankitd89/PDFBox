@@ -19,17 +19,17 @@ public class DropboxUtility {
 		client = new DbxClient(config, accessToken);
 	}
 	
-	 public void uploadFile() throws Exception
+	 public void uploadFile(String file) throws Exception
 	 {
 
 	    login();
 	    FileInputStream inputStream =null;
 	    try 
 	    {
-	       File inputFile = new File("src/main/java/dropbox.pdf");
+	       File inputFile = new File(file);
 	       inputStream= new FileInputStream(inputFile);
 	       
-	       DbxEntry.File uploadedFile = client.uploadFile("/dropbox.pdf",
+	       DbxEntry.File uploadedFile = client.uploadFile("/"+file,
 	       DbxWriteMode.add(), inputFile.length(), inputStream);
 	       System.out.println("Uploaded: " + uploadedFile.toString());
 	    } 

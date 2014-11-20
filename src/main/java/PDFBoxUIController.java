@@ -10,4 +10,9 @@ public class PDFBoxUIController {
 	public String firstPage() {
 		return "login";
 	}
+	
+	@RequestMapping(value="/PDFbox", method=RequestMethod.GET)
+	public String homePage() {
+		return "home";
+	}
 }
