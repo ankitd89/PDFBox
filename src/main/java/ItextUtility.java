@@ -56,12 +56,11 @@ public class ItextUtility
     		this.buildBillRef();
     		this.buildBillAmount();
     		this.buildBillProducts();
-    		this.displayBill();
+    		//this.displayBill();
     		
     		//this.displayBillLines();
     		MongoConfigJava mongo = new MongoConfigJava();
     		mongo.saveBill(bill);
-    		
     		reader.close();
     	}
     	catch(Exception e)
@@ -70,7 +69,6 @@ public class ItextUtility
     	}
     }
 	
-    @SuppressWarnings("unused")
 	private void displayBillLines()
     {
     	for(int j = 0; j<=lines.size();j++)
@@ -91,7 +89,6 @@ public class ItextUtility
     private void buildBillRef() 
     {
     	bill.setBillRef(StringFormatter.clearBillRef(lines.get(lines.size()-9)));
-    	System.out.println("Reference number retrived from receipt : "+bill.getBillRef());
 	}
     
     private void buildBillProducts() 
