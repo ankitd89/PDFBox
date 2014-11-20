@@ -40,11 +40,11 @@ public class PDFBoxController {
     	            	
     	                byte[] bytes = file.getBytes();
     	                BufferedOutputStream stream =
-    	                        new BufferedOutputStream(new FileOutputStream(new File("./src/main/webapp/resources/images/"+file.getOriginalFilename())));
+    	                        new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
     	                stream.write(bytes);
     	                stream.close();
     	                System.out.println(file.getOriginalFilename());
-    	                dropbox.uploadFile("./src/main/webapp/resources/images/"+file.getOriginalFilename());
+    	                dropbox.uploadFile(file.getOriginalFilename());
     	                return "upload success!!";
     	            } catch (Exception e) {
     	                return "You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage();

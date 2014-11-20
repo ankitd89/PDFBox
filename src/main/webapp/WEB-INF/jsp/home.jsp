@@ -12,16 +12,42 @@
 
   </head>  
   <body>  
-
+<!--
 <i>Uploading File With Ajax</i><br/>
 <form id="form2" method="post" action="/cmpe273-Project-PDFBox-/rest/cont/upload" enctype="multipart/form-data">
-  <input name="file2" id="file2" type="file" /><br/>
+  <input name="file2" id="file2" type="file"  /><br/>
 </form>
  
 <button value="Submit" onclick="uploadFormData()" >Upload</button>
  
 <div id="result"></div>
+-->
 
+
+<form class="form-horizontal" id="form2" method="post" enctype="multipart/form-data">
+<fieldset>
+
+<!-- Form Name -->
+<legend>PDF Box</legend>
+
+<!-- Button Drop Down -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="buttondropdown">Browse</label>
+  <div class="col-md-6">
+    <div class="input-group">
+      <input id="file2"  name="file2" class="form-control" placeholder="No file selected" type="file">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-info" onclick="uploadFormData()">
+          <span class="glyphicon glyphicon-arrow-up"></span>
+          Upload
+       
+        </button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<div id="result"></div>
 </body>
 </html>
   </body>  
