@@ -33,8 +33,10 @@ dependencies{
     compile("org.webjars:bootstrap:3.0.3")
     compile("org.webjars:jquery:2.0.3-1")
     compile('javax.servlet:jstl:1.2')
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 	providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
-	compile 'org.springframework.data:spring-data-mongodb:1.6.0.RELEASE';
+	
+	
 	
 }
 

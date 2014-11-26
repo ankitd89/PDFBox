@@ -3,15 +3,15 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.SortedMap;
-import java.util.List;
-import model.*;
+import model.Bill;
+import model.Product;
 
 //iText imports
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
-import com.jramoyo.io.*;
+import com.jramoyo.io.IndexedFileReader;
 
 import config.MongoConfigJava;
 

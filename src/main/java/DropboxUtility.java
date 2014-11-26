@@ -1,18 +1,28 @@
-import com.dropbox.core.*;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Locale;
-import java.io.*;
+import model.Account;
+import com.dropbox.core.DbxAppInfo;
+import com.dropbox.core.DbxClient;
+import com.dropbox.core.DbxEntry;
+import com.dropbox.core.DbxException;
+import com.dropbox.core.DbxRequestConfig;
+import com.dropbox.core.DbxRequestUtil;
+import com.dropbox.core.DbxWebAuthNoRedirect;
+import com.dropbox.core.DbxWriteMode;
+import com.dropbox.core.http.HttpRequestor;
 
 public class DropboxUtility {
 	final String APP_KEY = "4f242qr19c5vyy8";
 	final String APP_SECRET = "x0gtlkorpr2kqc2";
-	String accessToken = "hJXl5ZHWosAAAAAAAAAYA8-wNLV6XQ4dmId2MI_JmQIzUPDQ9fNpGoYnHsOTORcf";
+	static String accessToken;
 	DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
 	DbxClient client;
-
+	DbxRequestConfig config = new DbxRequestConfig("cmpe_273", Locale
+			.getDefault().toString());
 	public void login() {
-		DbxRequestConfig config = new DbxRequestConfig("cmpe_273", Locale
-				.getDefault().toString());
+		
 		DbxWebAuthNoRedirect webAuth = new DbxWebAuthNoRedirect(config, appInfo);
 		@SuppressWarnings("unused")
 		String authorizeUrl = webAuth.start();
@@ -70,4 +80,22 @@ public class DropboxUtility {
 	        return files;
 	        
 	    }
+	 
+	 //gets account info
+	 public Account getAccountInfo()throws DbxException
+	 {
+        String host = "api.dropbox.com";
+        String apiPath = "1/account/info";
+        return DbxRequestUtil.doGet(config, accessToken, host, apiPath, null, null, new DbxRequestUtil.ResponseHandler<Account>(){
+            @Override
+            public Account handle(HttpRequestor.Response response) throws DbxException
+            {
+            	if (response.statusCode != 200) throw new DbxException.BadResponse("unexpected response code: " + response.statusCode); 
+            	return DbxRequestUtil.readJsonFromResponse(Account.Reader, response.body);
+            }
+        });
+        
+	  }
+ 
+ 
 }
