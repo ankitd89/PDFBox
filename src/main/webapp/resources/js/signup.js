@@ -1,27 +1,54 @@
-
 function fetchSignUpValues() {
-	var email = document.getElementById("email").value;
-	var firstName = document.getElementById("firstname").value;
-	var lastName = document.getElementById("lastname").value;
-	var password = document.getElementById("password").value;
-	var str={
-			"email" : email,
-		    "firstName":firstName,
-		    "lastName":lastName,
-		    "password":password
-		      };
+	var email = document.getElementById("login-username").value;
+	var alertId = document.getElementById("login-alert");
+	if(email == "")
+	{
+		alertId.style.display = "inline";
+		document.getElementById("lblError").innerHTML = "Email cannot be blank";
+		return false
+	}
+	var blnValidate = validateEmail(email);
+	if(!blnValidate)
+	{
+		alertId.style.display = "inline";
+		document.getElementById("lblError").innerHTML = "Email format is invalid";
+		return blnValidate;
+	}
+	var url = "http://localhost:8080/signin/" + email;
 	
     $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "http://localhost:8080/signup",
-        dataType: "json",
-        data: JSON.stringify(str),
-        success: function(data,textStatus, jqXHR){
-            
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        url:  url,
+        dataType: "text",
+        success: function(data,status, jqXHR){
+        	if(data == "success")
+        			window.open("/home", "_self");  
+        	else
+        	{
+        		alertId.style.display = "inline";
+        		document.getElementById("lblError").innerHTML = "Email entered is not registered. Please Sign Up with Dropbox.";
+        	}
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(textStatus + errorThrown);
+        error: function(jqXHR, status, errorThrown){
+            alert(status + errorThrown);
         }
     });
+}
+
+function validateEmail(email) {
+    
+    var atpos = email.indexOf("@");
+    var dotpos = email.lastIndexOf(".");
+    if (atpos< 1 || dotpos<atpos+2 || dotpos+2>=email.length)
+        return false;
+    else 
+    	return true;
+}
+
+function closeErrorMsg()
+{
+	var alertId = document.getElementById("login-alert");
+	alertId.style.display = "none";
+
 }
