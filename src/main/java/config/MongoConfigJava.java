@@ -6,6 +6,8 @@ import model.Product;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -20,6 +22,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
  
 @Configuration
 public class MongoConfigJava {
@@ -28,7 +31,7 @@ public class MongoConfigJava {
 	
 	public @Bean
 	MongoDbFactory mongoDbFactory() throws Exception {
-		return new SimpleMongoDbFactory(new MongoClient(), "PDFBox");
+		return new SimpleMongoDbFactory(new MongoClient(new MongoClientURI("mongodb://Pdfbox:Pdfbox@ds051640.mongolab.com:51640/pdfbox")), "pdfbox");
 	}
  
 	public @Bean
@@ -51,37 +54,48 @@ public class MongoConfigJava {
 		}
 	}
 	
-	public List<Bill> getBillsForAmountWithCondition(String amount, String condition)
+	public List<Bill> getBillsForAmountWithCondition(double amount, String condition)
 	{
 		List<Bill> bills = new ArrayList<Bill>();
+		
+		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
+		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 		try
 		{
 			MongoOperations operation = mongoTemplate();
-			@SuppressWarnings("deprecation") 
-			Mongo mongo = new Mongo("localhost", 27017);
-			DB db = mongo.getDB("PDFBox");
+//			@SuppressWarnings("deprecation") 
+//			Mongo mongo = new Mongo("localhost", 27017);
+//			DB db = mongo.getDB("PDFBox");
 		 
 			  // get a single collection
-			  DBCollection collection = db.getCollection("bills");
+//			  DBCollection collection = db.getCollection("bills");
 			  switch(condition)
 				{
 					case "<": {
-						
+						Query q = new Query();
+						q.addCriteria(Criteria.where("totalBillAmount").lt(amount));
+						bills = mongoOperation.find(q, Bill.class);
 					}
 					break;
 				
 					case ">": {
-
+						Query q = new Query();
+						q.addCriteria(Criteria.where("totalBillAmount").gt(amount));
+						bills = mongoOperation.find(q, Bill.class);
 					}
 					break;
 					
 					case "<=": {
-
+						Query q = new Query();
+						q.addCriteria(Criteria.where("totalBillAmount").lte(amount));
+						bills = mongoOperation.find(q, Bill.class);
 					}
 					break;
 					
 					case ">=": {
-
+						Query q = new Query();
+						q.addCriteria(Criteria.where("totalBillAmount").gte(amount));
+						bills = mongoOperation.find(q, Bill.class);
 					}
 					break;
 					
@@ -92,7 +106,7 @@ public class MongoConfigJava {
 					break;
 					
 					default: {
-
+						System.out.println("Invalid operator, only <,>,<=,>=,= are allowed");
 					}
 					break;
 				}

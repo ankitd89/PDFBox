@@ -62,6 +62,7 @@ public class ItextUtility
     		//this.displayBillLines();
     		MongoConfigJava mongo = new MongoConfigJava();
     		mongo.saveBill(bill);
+    		mongo.getBillsForAmountWithCondition(150, "<");
     		reader.close();
     	}
     	catch(Exception e)

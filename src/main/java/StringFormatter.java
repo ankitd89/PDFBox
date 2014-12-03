@@ -85,10 +85,10 @@ class StringFormatter
 		return clearedProducts;
 	}
 	
-	public static String clearTotalAmount(String amt)
+	public static double clearTotalAmount(String amt)
 	{
-		String temp;
-		temp = amt.replaceAll("[^.0-9]+", "");
+		double temp;
+		temp = Double.parseDouble(amt.replaceAll("[^.0-9]+", ""));
 		return temp;
 	}
 	

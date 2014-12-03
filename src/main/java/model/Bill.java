@@ -6,12 +6,15 @@ import org.springframework.data.annotation.Id;
  * @abstract: This is bill bean class
  * 
  */
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "bills")
 public class Bill
 {
 	@Id
 	private String billRef;
 	private String shopId;
-	private String totalBillAmount;
+	private double totalBillAmount;
 	private ArrayList<Product> products;
 	private String billDate;
 	private String billTime;
@@ -29,10 +32,10 @@ public class Bill
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
 	}
-	public String getTotalBillAmount() {
+	public double getTotalBillAmount() {
 		return totalBillAmount;
 	}
-	public void setTotalBillAmount(String totalBillAmount) {
+	public void setTotalBillAmount(double totalBillAmount) {
 		this.totalBillAmount = totalBillAmount;
 	}
 	public ArrayList<Product> getProducts() {
