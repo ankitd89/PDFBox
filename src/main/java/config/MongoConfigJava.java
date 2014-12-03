@@ -3,13 +3,10 @@ package config;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-=======
 import model.Bill;
 
->>>>>>> 053ae9761e9a4a7a17a054e846e6e161fe2b1d67
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
