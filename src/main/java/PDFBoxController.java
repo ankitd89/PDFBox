@@ -90,7 +90,8 @@ public class PDFBoxController {
     @RequestMapping(value="/dropbox/Pdftotext",method=RequestMethod.POST)
     public String RestPdfToText() {
     	utility.convertPdfToText("", ""); //TODO: Pass correct parameters after serialization and deserialization
-    	Bill bill=utility.buildMetaDataForFile(""); //TODO: Pass actual src
+    	Bill bill=new Bill();
+    	bill=utility.buildMetaDataForFile(""); //TODO: Pass actual src
     	mongo.saveBill(bill);
     	return "Pdf converted to Text";
     }
@@ -144,8 +145,14 @@ public class PDFBoxController {
 	}
 	
 	@RequestMapping(value="/getTotalEarnings/{date}", method=RequestMethod.GET)
-	public int getTotalEarnings(@PathVariable("date") String date) {
-		int amount= mongo.getEarningsForDate(date);
+	public double getTotalEarnings(@PathVariable("date") String date) {
+		double amount= mongo.getEarningsForDate(date);
+		return amount;
+	}
+	
+	@RequestMapping(value="/getEarningsForMode/{mode}", method=RequestMethod.GET)
+	public double getModeEarnings(@PathVariable("mode") String mode) {
+		double amount= mongo.getEarningsForPaymentType(mode);
 		return amount;
 	}
 }

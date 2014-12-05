@@ -106,13 +106,27 @@ public class MongoUtility{
 		return count;
 	}
 	
-	public int getEarningsForDate(String date){
+	public double getEarningsForDate(String date){
 		List<Bill> bills = new ArrayList<Bill>();		
 		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
-		int amount=0;
+		double amount=0;
 		try{
 		Bill bill =  (Bill) mongoOperation.findOne(new Query(Criteria.where("billDate").is(date)), Bill.class, "bills");
+		amount+= bill.getTotalBillAmount();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return amount;
+	}
+	
+	public double getEarningsForPaymentType(String type){
+		List<Bill> bills = new ArrayList<Bill>();		
+		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
+		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+		double amount=0;
+		try{
+		Bill bill =  (Bill) mongoOperation.findOne(new Query(Criteria.where("paymentMode").is(type)), Bill.class, "bills");
 		amount+= bill.getTotalBillAmount();
 		}catch(Exception e){
 			e.printStackTrace();

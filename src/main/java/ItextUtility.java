@@ -57,17 +57,18 @@ public class ItextUtility
     		this.buildBillRef();
     		this.buildBillAmount();
     		this.buildBillProducts();
+    		this.buildPaymentMode();
     		//this.displayBill();
     		
     		//this.displayBillLines();
-    		MongoConfigJava mongo = new MongoConfigJava();
+    		//MongoConfigJava mongo = new MongoConfigJava();
     		//--------mongo.getBillsForAmountWithCondition(150, "<");
     		reader.close();
     		return bill;
     	}
     	catch(Exception e)
     	{
-    		System.out.println(e.getMessage());
+    		System.out.println("EXCEPTION!!! "+e.getMessage());
     		return null;
     	}
     }
@@ -124,6 +125,16 @@ public class ItextUtility
 			}
 	}
 
+	public void buildPaymentMode()
+	{
+		for(int i = lines.size();;i--)
+			if(i == lines.size()-17)
+			{
+				bill.setPaymentMode(StringFormatter.clearPaymentMode(lines.get(lines.size()-17)));
+				break;
+			}
+	}
+	
 	private void displayBill()
     {
     	System.out.println("Bill total is :" + this.bill.getTotalBillAmount());
@@ -131,11 +142,12 @@ public class ItextUtility
     	System.out.println("Bill date is: "+ this.bill.getBillDate());
     	System.out.println("Bill date is: "+ this.bill.getBillTime());
     	System.out.println("Bill Ref is: "+ this.bill.getBillRef());
+    	System.out.println("Bill Payment mode is "+ this.bill.getPaymentMode());
     	
 		for(int i = 0; i<=this.bill.getProducts().size();i++)
 		{
 			Product p = bill.getProducts().get(i);
 			System.out.println(":"+p.getProductQuantity()+":"+p.getProductName()+":"+p.getProductPrice());	
-			}
+		}
     }
 }

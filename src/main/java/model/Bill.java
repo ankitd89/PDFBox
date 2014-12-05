@@ -18,8 +18,14 @@ public class Bill
 	private ArrayList<Product> products;
 	private String billDate;
 	private String billTime;
+	private  String paymentMode;
 	
-	
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
 	public String getBillRef() {
 		return billRef;
 	}

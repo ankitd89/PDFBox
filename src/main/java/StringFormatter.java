@@ -16,6 +16,13 @@ class StringFormatter
 		return temp;
 	}
 	
+	public static String clearPaymentMode(String str)
+	{
+		String temp;
+		temp = str.replaceAll("[^a-zA-Z]+", "");
+		return temp;
+	}
+	
 	public static String clearBillDate(String str)
 	{
 		String clearString = "";
