@@ -5,6 +5,7 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
 import model.Users;
+import model.Bill;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -26,6 +27,7 @@ import config.MongoConfigJava;
 public class PDFBoxController {
 	DropboxUtility dropbox=new DropboxUtility();
 	ItextUtility utility = new ItextUtility();
+	MongoUtility mongo= new MongoUtility();
 	ApplicationContext ctx = new AnnotationConfigApplicationContext(MongoConfigJava.class);
 	MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
     
@@ -46,6 +48,7 @@ public class PDFBoxController {
     	                System.out.println(file.getOriginalFilename());
     	                dropbox.uploadFile(file.getOriginalFilename());
     	                return "upload success!!";
+    	                //TODO:refresh file list here
     	            } catch (Exception e) {
     	                return "You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage();
     	            }
@@ -54,7 +57,7 @@ public class PDFBoxController {
     	        }
     }
     
-    @RequestMapping(value="/dropbox/upload1",method=RequestMethod.POST)
+   /* @RequestMapping(value="/dropbox/upload1",method=RequestMethod.POST)
 	 public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
 	            @RequestParam("file") MultipartFile file){
 	        if (!file.isEmpty()) {
@@ -74,7 +77,7 @@ public class PDFBoxController {
 	        } else {
 	            return "You failed to upload " + name + " because the file was empty.";
 	        }
-}
+}*/
     @RequestMapping(value="/dropbox/download",method=RequestMethod.GET)
     public String RESTDownload() {
     	String metadata="";
@@ -83,10 +86,12 @@ public class PDFBoxController {
        }catch(Exception e){}
     	return metadata;
     }
+    
     @RequestMapping(value="/dropbox/Pdftotext",method=RequestMethod.POST)
     public String RestPdfToText() {
     	utility.convertPdfToText("", ""); //TODO: Pass correct parameters after serialization and deserialization
-    	utility.buildMetaDataForFile(""); //TODO: Pass actual src
+    	Bill bill=utility.buildMetaDataForFile(""); //TODO: Pass actual src
+    	mongo.saveBill(bill);
     	return "Pdf converted to Text";
     }
     
@@ -104,6 +109,7 @@ public class PDFBoxController {
 	@RequestMapping(value="/signin/{email}", method=RequestMethod.GET)
 	public String signup(@PathVariable("email") String email) {
 		email+=".com";
+		//TODO: use mongoUtility class for mongodb operations
 		Query searchUserQuery = new Query(Criteria.where("_id").is(email));
 		 Users savedUser = mongoOperation.findOne(searchUserQuery, Users.class);
 		 if(savedUser != null)
@@ -114,6 +120,7 @@ public class PDFBoxController {
 		 else
 			 return "failure";
 	}
+	
 	//This function will get email from Dropbox account api and save both email and access token in MongoDB
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(value="/accesstokens", method=RequestMethod.POST)
@@ -121,6 +128,7 @@ public class PDFBoxController {
 		 DropboxUtility.accessToken = access_token;
 		 try {
 			Account acc = dropbox.getAccountInfo();
+			//TODO: use mongoUtility class for mongodb operations
 			Users addUser = new Users(acc.getEmail(), access_token);
 			mongoOperation.save(addUser);
 		}
@@ -129,5 +137,15 @@ public class PDFBoxController {
 		}
 	}
 	
+	@RequestMapping(value="/getBillCount/{date}", method=RequestMethod.GET)
+	public int getBillCount(@PathVariable("date") String date) {
+		int count= mongo.getNumberOfBillsForDate(date);
+		return count;
+	}
 	
+	@RequestMapping(value="/getTotalEarnings/{date}", method=RequestMethod.GET)
+	public int getTotalEarnings(@PathVariable("date") String date) {
+		int amount= mongo.getEarningsForDate(date);
+		return amount;
+	}
 }

@@ -42,7 +42,7 @@ public class ItextUtility
       	{e.printStackTrace();}
     }
 	
-	public void buildMetaDataForFile(String src)
+	public Bill buildMetaDataForFile(String src)
     {
     	try{
     		products = new ArrayList<String>();
@@ -61,13 +61,14 @@ public class ItextUtility
     		
     		//this.displayBillLines();
     		MongoConfigJava mongo = new MongoConfigJava();
-    		mongo.saveBill(bill);
-    		mongo.getBillsForAmountWithCondition(150, "<");
+    		//--------mongo.getBillsForAmountWithCondition(150, "<");
     		reader.close();
+    		return bill;
     	}
     	catch(Exception e)
     	{
     		System.out.println(e.getMessage());
+    		return null;
     	}
     }
 	
