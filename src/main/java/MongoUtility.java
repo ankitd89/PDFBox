@@ -85,7 +85,7 @@ public class MongoUtility{
 		}
 		
 		for(int i = 0; i < bills.size(); i++)
-			billNames.add(bills.get(i).getBillName());
+			billNames.add(bills.get(i).getBillRef());
 		
 		return billNames;
 	}
@@ -110,7 +110,7 @@ public class MongoUtility{
 		}
 		
 		for(int i = 0; i < bills.size(); i++)
-			billNames.add(bills.get(i).getBillName());
+			billNames.add(bills.get(i).getBillRef());
 		
 		return billNames;
 	}

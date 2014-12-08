@@ -19,14 +19,7 @@ public class Bill
 	private String billDate;
 	private String billTime;
 	private String paymentMode;
-	private String billName;
 	
-	public String getBillName() {
-		return billName;
-	}
-	public void setBillName(String billName) {
-		this.billName = billName;
-	}
 	public String getPaymentMode() {
 		return paymentMode;
 	}
