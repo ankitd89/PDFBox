@@ -28,21 +28,15 @@ public class MongoUtility{
 		}
 	}
 	
-	public List<Bill> getBillsForAmountWithCondition(double amount, String condition)
+	public List<String> getBillsForAmountWithCondition(double amount, String condition)
 	{
+		List<String> billNames = new ArrayList<String>();
 		List<Bill> bills = new ArrayList<Bill>();
 		
 		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 		try
 		{
-			//MongoOperations operation = mongoTemplate();
-//			@SuppressWarnings("deprecation") 
-//			Mongo mongo = new Mongo("localhost", 27017);
-//			DB db = mongo.getDB("PDFBox");
-		 
-			  // get a single collection
-//			  DBCollection collection = db.getCollection("bills");
 			  switch(condition)
 				{
 					case "<": {
@@ -89,25 +83,43 @@ public class MongoUtility{
 		{
 			e.printStackTrace();
 		}
-		return bills;
+		
+		for(int i = 0; i < bills.size(); i++)
+			billNames.add(bills.get(i).getBillName());
+		
+		return billNames;
 	}
 	
-	public int getNumberOfBillsForDate(String date){
-		List<Bill> bills = new ArrayList<Bill>();		
+	public List<String> getNumberOfBillsForDate(String date)
+	{
+		List<String> billNames = new ArrayList<String>();
+		List<Bill> bills = new ArrayList<Bill>();	
+		
 		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
-		try{
-		Bill bill =  (Bill) mongoOperation.findOne(new Query(Criteria.where("billDate").is(date)), Bill.class, "bills");
-		bills.add(bill);
-		}catch(Exception e){
+		
+		try
+		{
+			Query q = new Query();
+			q.addCriteria(Criteria.where("billDate").is(date));
+			bills = mongoOperation.find(q, Bill.class);
+		}
+		catch(Exception e)
+		{
 			e.printStackTrace();
 		}
-		int count=bills.size();
-		return count;
+		
+		for(int i = 0; i < bills.size(); i++)
+			billNames.add(bills.get(i).getBillName());
+		
+		return billNames;
 	}
 	
-	public double getEarningsForDate(String date){
-		List<Bill> bills = new ArrayList<Bill>();		
+	public double getEarningsForDate(String date)
+	{
+		List<String> billNames = new ArrayList<String>();
+		List<Bill> bills = new ArrayList<Bill>();	
+		
 		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 		double amount=0;

@@ -2,6 +2,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Iterator;
+import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
 import model.Users;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.dropbox.core.DbxException;
 import config.MongoConfigJava;
+
 @RestController
 public class PDFBoxController {
 	DropboxUtility dropbox=new DropboxUtility();
@@ -140,9 +142,8 @@ public class PDFBoxController {
 	}
 	
 	@RequestMapping(value="/getBillCount/{date}", method=RequestMethod.GET)
-	public int getBillCount(@PathVariable("date") String date) {
-		int count= mongo.getNumberOfBillsForDate(date);
-		return count;
+	public List<String> getBillCount(@PathVariable("date") String date) {
+		return mongo.getNumberOfBillsForDate(date);
 	}
 	
 	@RequestMapping(value="/getTotalEarnings/{date}", method=RequestMethod.GET)
