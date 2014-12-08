@@ -24,9 +24,9 @@
 			class="glyphicon glyphicon-log-out"></span> Logout </a>
 	</div>
 
-<div class="container-fluid">
-    <div class="row-fluid">
-      <div id="divContainer" class="col-lg-4 "
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div id="divContainer" class="col-lg-4 "
         style="border: thick; border-style: solid; height: 500px; overflow:scroll;">
       </div>
       <div id= "divFilesDisplay" class="col-lg-4 "
@@ -58,38 +58,73 @@
 							</div>
 						</div>
 					</div>
-          <div class="input-group-btn"
-            style="position: relative; left: 0px; top:0px; width: 150px; height: 100px">
-            <div class="input-group-btn search-panel" style="position: absolute; left: 0px; top: 0px; width: 250px; height: 100px">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  
-                  	onclick="selectAmount()" style="position: absolute; left: 0px; top: 0px; width:170px">
-                  	<span id="search_concept">Filter By</span> <span class="caret"></span>
-                 </button>
-                   <ul class="dropdown-menu" role="menu" >
-                      <li><a href="#its_equal">Equal</a></li>
-                      <li><a href="#greater_than">Greater than ></a></li>
-                      <li><a href="#less_than">Less than < </a></li>
-                      <li><a href="#less_than_equal">Less than equal to <= </a></li>
-                      <li><a href="#less_than_equal">Less than equal to >= </a></li>
-                      <li class="divider"></li>
-                     
-                    </ul>
-            </div>
+					<div class="col-md-6"
+						style="position: relative; left: 0px; top: 0px; width: 550px; height: 30px">
+						<label id="lblFilter"
+							style="position: relative; left: -5px; top: 5px; width: 80px; height: 30px">
+							Filter Bills </label> <select id="cboFilter" onchange="filterOptions()"
+							style="position: relative; left: 0px; top: 0px; width: 150px; height: 30px">
+							<option value=" "></option>
+							<option value="Amount">Amount</option>
+							<option value="Date">Date</option>
+							<option value="Payment Mode">Payment Mode</option>
+						</select>
+					</div>
 
-            <input type="hidden" name="search_param" value="all" id="search_param"> </input>        
-            <input type="text" class="form-control" name="x" placeholder="Search term..." style="position: absolute; left: 180px; top: 0px;"></input>
-                
-            <button class="btn btn-default" type="button" style="position: absolute; left: 335px; top: 0px; height 100px">
-              <span class="glyphicon glyphicon-search" style="position: relative; left: 0px; top: 0px;"></span>
-            </button>
-          </div>
-        </div>
-        <div id="result"></div>
-
-      </div>
-    </div>
-  </div>
+					<div class="col-md-6" id="divAmount" hidden="true"
+						style="position: relative; left: 0px; top: 0px; width: 550px; height: 30px">
+						<label id="lblAmount"
+							style="position: relative; left: -5px; top: 5px; width: 80px; height: 30px">
+							Amount Condition </label> <select id="cboFilter"
+							style="position: relative; left: 0px; top: 0px; width: 150px; height: 30px">
+							<option value=" "></option>
+							<option value="=">Equal</option>
+							<option value=">">Greater than</option>
+							<option value="<">Less than</option>
+							<option value="<= ">Less than equal to</option>
+							<option value=">=">Greater than equal to</option>
+						</select> <input type="text" id="txtAmount"
+							style="position: relative; left: 0px; top: 0px; width: 100px; height: 30px;"
+							placeholder="Enter Amount" />
+						<button class="btn btn-default" id="btnAmount" type="button"
+							style="position: relative; left: 0px; top: 0px; height: 30px;">
+							<span class="glyphicon glyphicon-search"
+								style="position: relative; left: 0px; top: 0px;"></span>
+						</button>
+					</div>
+					<div class="col-md-6" id="divDate" hidden="true"
+						style="position: relative; left: 0px; top: 0px; width: 550px; height: 30px">
+						<label id="lblDate"
+							style="position: relative; left: -5px; top: 15px; width: 80px; height: 30px">
+							Date Condition </label> <input type="date" id="txtDate"
+							style="position: relative; left: 0px; top: 5px; width: 180px; height: 30px;"
+							placeholder="Enter Date">
+						<button class="btn btn-default" id="btnDate" type="button"
+							style="position: relative; left: 0px; top: 3px; height: 30px;">
+							<span class="glyphicon glyphicon-search"
+								style="position: relative; left: 0px; top: 0px;"></span>
+						</button>
+					</div>
+					<div class="col-md-6" id="divPayment" hidden="true"
+						style="position: relative; left: 0px; top: 0px; width: 550px; height: 30px">
+						<label id="lblPayment"
+							style="position: relative; left: -5px; top: 15px; width: 80px; height: 30px">
+							Payment Condition </label> <select id="cboPayment"
+							style="position: relative; left: 0px; top: 0px; width: 150px; height: 30px">
+							<option value=" "></option>
+							<option value="card">Card</option>
+							<option value="cash">Cash</option>
+						</select>
+						<button class="btn btn-default" id="btnPayment" type="button"
+							style="position: relative; left: 0px; top: 0px; height: 30px;">
+							<span class="glyphicon glyphicon-search"
+								style="position: relative; left: 0px; top: 0px;"></span>
+						</button>
+					</div>
+				</div>
+				<div id="result" hidden="true"></div>
+			</div>
+		</div>
+	</div>
 </body>
-  
-    
 </html>
