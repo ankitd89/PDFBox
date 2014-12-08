@@ -8,10 +8,10 @@ import org.springframework.data.annotation.Id;
  */
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "bills")
+
 public class Bill
 {
-	@Id
+	
 	private String billRef;
 	private String shopId;
 	private double totalBillAmount;

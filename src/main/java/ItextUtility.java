@@ -20,12 +20,11 @@ public class ItextUtility
 	ArrayList<String> products;
 	SortedMap<Integer, String> lines;
 	Bill bill;
-	public void convertPdfToText(String src, String dest)
+	public void convertPdfToText()
     {
     	try
     	{
-    		//TODO: use src and dest parameters when finished testing
-    		PdfReader reader = new PdfReader("receipt-1.pdf");
+    		PdfReader reader = new PdfReader("receipt.pdf");
     		PdfReaderContentParser parser = new PdfReaderContentParser(reader);
     		PrintWriter out = new PrintWriter(new FileOutputStream("output.txt"));
     		TextExtractionStrategy strategy;
@@ -42,16 +41,18 @@ public class ItextUtility
       	{e.printStackTrace();}
     }
 	
-	public Bill buildMetaDataForFile(String src)
+	public Bill buildMetaDataForFile()
     {
+		bill = new Bill();
+		products = new ArrayList<String>();
+
     	try{
-    		products = new ArrayList<String>();
-    		bill = new Bill();
-    		//TODO: use src parameter
+    		
     		File file = new File("output.txt");
     		IndexedFileReader reader = new IndexedFileReader(file);
     		int totalLines = reader.getLineCount();
     		lines =  reader.readLines(1, totalLines);
+    		this.displayBillLines();
     		this.buildShopIdForBill();
     		this.buildBillDateAndTime();
     		this.buildBillRef();
@@ -60,9 +61,6 @@ public class ItextUtility
     		this.buildPaymentMode();
     		//this.displayBill();
     		
-    		//this.displayBillLines();
-    		//MongoConfigJava mongo = new MongoConfigJava();
-    		//--------mongo.getBillsForAmountWithCondition(150, "<");
     		reader.close();
     		return bill;
     	}

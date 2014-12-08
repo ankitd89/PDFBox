@@ -37,9 +37,8 @@ public class DropboxUtility {
 	    FileInputStream inputStream =null;
 	    try 
 	    {
-	       File inputFile = new File(file);
+	       File inputFile = new File("receipt.pdf");
 	       inputStream= new FileInputStream(inputFile);
-	       
 	       DbxEntry.File uploadedFile = client.uploadFile("/"+file,
 	       DbxWriteMode.add(), inputFile.length(), inputStream);
 	       System.out.println("Uploaded: " + uploadedFile.toString());

@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Bill;
+import model.Users;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.ApplicationContext;
@@ -13,15 +14,20 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Criteria;
 
 public class MongoUtility{
-	private String BILLS_COLLECTION = "bills";
-
-	public void saveBill(Bill b)
+	private String BILLS_COLLECTION = "users";
+	
+	public void saveBill(String currentUser, Bill b)
 	{
 		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+		List<Users> bills = new ArrayList<Users>();
 		try{
-			//MongoOperations operation = mongoTemplate();
-			mongoOperation.save(b, BILLS_COLLECTION);
+			Query q = new Query();
+			q.addCriteria(Criteria.where("_id").is(currentUser));
+			System.out.println("current user : " + currentUser);
+			Users user = mongoOperation.findOne(q, Users.class);
+			user.getBills().add(b);
+			mongoOperation.save(user, BILLS_COLLECTION);
 		}
 		catch(Exception e){
 			e.printStackTrace();

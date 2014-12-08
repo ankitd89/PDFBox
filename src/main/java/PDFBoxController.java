@@ -32,7 +32,7 @@ public class PDFBoxController {
 	MongoUtility mongo= new MongoUtility();
 	ApplicationContext ctx = new AnnotationConfigApplicationContext(MongoConfigJava.class);
 	MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
-    
+    static String currentUser;
  
     @RequestMapping(value="/dropbox/upload",method=RequestMethod.POST)
     	 public @ResponseBody String handleFileUpload(MultipartHttpServletRequest request, HttpServletResponse response){
@@ -44,11 +44,14 @@ public class PDFBoxController {
     	            	
     	                byte[] bytes = file.getBytes();
     	                BufferedOutputStream stream =
-    	                        new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
+    	                        new BufferedOutputStream(new FileOutputStream(new File("receipt.pdf")));
     	                stream.write(bytes);
     	                stream.close();
-    	                System.out.println(file.getOriginalFilename());
-    	                dropbox.uploadFile(file.getOriginalFilename());
+    	                utility.convertPdfToText();
+    	            	Bill bill=new Bill();
+    	            	bill=utility.buildMetaDataForFile();
+    	            	mongo.saveBill(currentUser, bill);	                    
+    	                dropbox.uploadFile(bill.getBillRef()+".pdf");
     	                return "upload success!!";
     	                //TODO:refresh file list here
     	            } catch (Exception e) {
@@ -59,27 +62,7 @@ public class PDFBoxController {
     	        }
     }
     
-   /* @RequestMapping(value="/dropbox/upload1",method=RequestMethod.POST)
-	 public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
-	            @RequestParam("file") MultipartFile file){
-	        if (!file.isEmpty()) {
-	            try {
-	            	
-	                byte[] bytes = file.getBytes();
-	                BufferedOutputStream stream =
-	                        new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
-	                stream.write(bytes);
-	                stream.close();
-	                System.out.println(file.getOriginalFilename());
-	                dropbox.uploadFile(file.getOriginalFilename());
-	                return "You successfully uploaded receipt to dropbox !";
-	            } catch (Exception e) {
-	                return "You failed to upload " + name + " => " + e.getMessage();
-	            }
-	        } else {
-	            return "You failed to upload " + name + " because the file was empty.";
-	        }
-}*/
+
     @RequestMapping(value="/dropbox/download/{file}",method=RequestMethod.GET)
     public String RESTDownload(@PathVariable ("file") String fileName) {
     	String metadata="";
@@ -88,15 +71,6 @@ public class PDFBoxController {
     	System.out.println("in restdownload");
        }catch(Exception e){}
     	return metadata;
-    }
-    
-    @RequestMapping(value="/dropbox/Pdftotext",method=RequestMethod.POST)
-    public String RestPdfToText() {
-    	utility.convertPdfToText("", ""); //TODO: Pass correct parameters after serialization and deserialization
-    	Bill bill=new Bill();
-    	bill=utility.buildMetaDataForFile(""); //TODO: Pass actual src
-    	mongo.saveBill(bill);
-    	return "Pdf converted to Text";
     }
     
     @RequestMapping(value="/dropbox/files",method=RequestMethod.GET)
@@ -113,6 +87,7 @@ public class PDFBoxController {
 	@RequestMapping(value="/signin/{email}", method=RequestMethod.GET)
 	public String signup(@PathVariable("email") String email) {
 		email+=".com";
+		currentUser=email;
 		//TODO: use mongoUtility class for mongodb operations
 		Query searchUserQuery = new Query(Criteria.where("_id").is(email));
 		 Users savedUser = mongoOperation.findOne(searchUserQuery, Users.class);
@@ -133,6 +108,7 @@ public class PDFBoxController {
 		 try {
 			Account acc = dropbox.getAccountInfo();
 			//TODO: use mongoUtility class for mongodb operations
+			currentUser=acc.getEmail();
 			Users addUser = new Users(acc.getEmail(), access_token);
 			mongoOperation.save(addUser);
 		}
