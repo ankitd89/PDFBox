@@ -143,3 +143,6 @@ function showClickedFile(t)
 
 	containerId.appendChild(fileObj);
 }
+function logout() {
+	window.open("/login", "_self");
+}
