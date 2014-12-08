@@ -44,10 +44,12 @@ $(document).ready(function(e){
 <div class="container-fluid">
     <div class="row-fluid">
       <div id="divContainer" class="col-lg-4 "
-        style="border: thick; border-style: solid; height: 500px;">
+        style="border: thick; border-style: solid; height: 500px; overflow:scroll;">
       </div>
-      <div class="col-lg-4 "
-        style="border: thick; border-style: solid; height: 500px;">
+      <div id= "divFilesDisplay" class="col-lg-4 "
+        style="border: thick; border-style: solid; height: 500px; ">
+        </object>
+
       </div>
       <div class="col-lg-4 "
         style="border: thick; border-style: solid; height: 500px;">
@@ -55,21 +57,21 @@ $(document).ready(function(e){
           <label class="col-md-5 control-label" for="buttondropdown"
             style="position: absolute; left: 0px; top: 0px;">Browse</label>
           <div class="col-md-6"
-            style="position: relative; left: 50px; top: 0px; width: 550px; height: 50px">
+            style="position: relative; left: 50px; top: 0px; width: 550px; height: 100px">
             <div class="input-group"
-              style="position: relative; left: 0px; top: 0px; width: 225px; height: 50px">
+              style="position: relative; left: 0px; top: 0px; width: 225px; height: 100px">
               <input id="file2" name="file2" class="form-control"
                 placeholder="No file selected" type="file"
                 style="position: absolute; left: 10px; top: 0px;">
               <div class="input-group-btn"
-                style="position: relative; left: 50px; top: 0px; width: 150px; height: 50px">
+                style="position: relative; left: 50px; top: 0px; width: 150px; height: 100px">
                 <button type="button" class="btn btn-info"
                   onclick="uploadFormData()"
                   style="position: absolute; left: 120px; top: 0px;">
                   <span class="glyphicon glyphicon-arrow-up"></span> Upload
 
                 </button>
-
+                <button type="button" class= "btn btn-info" onclick="getBillsForDate()">Mongo</button>
               </div>
             </div>
           </div>

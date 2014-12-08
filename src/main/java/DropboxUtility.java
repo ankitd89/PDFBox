@@ -51,20 +51,34 @@ public class DropboxUtility {
 	}
 
 	//Download file from dropbox
-	 public String downloadFile() throws Exception{
+	 public String downloadFile(String file) throws Exception{
 
 	        login();
-	        DbxEntry.File downloadedFile;
-	        FileOutputStream outputStream = new FileOutputStream("dropbox.pdf");
+	        DbxEntry.File downloadedFile = null;
+	        FileOutputStream outputStream = null;
 	        try 
 	        {
-	        	downloadedFile= client.getFile("/dropbox.pdf", null,
-	                outputStream);
+	        	file=file+".pdf";
+	        	System.out.println("In downloadFile.. file is:" +file);
+	        	//ClassLoader classLoader = getClass().getClassLoader();
+	        	//System.out.println(classLoader.getParent().toString());
+	        	File outputFile = new File(file);
+	        	outputStream = new FileOutputStream(outputFile);
+	        	downloadedFile= client.getFile("/" +file, null,outputStream);
+	        	String a = outputFile.getAbsolutePath(); 
+	        	System.out.println(a+ "  PAth");
+	        	System.out.println("Downloaded File is:" +downloadedFile.name);
 	            System.out.println("Metadata: " + downloadedFile.toString());
-	        } finally {
-	            outputStream.close();
+	            
+	        }catch(Exception e){System.out.println("Error" +e);}
+	        
+	        
+	        finally {
+	        	outputStream.close();
+	        	return downloadedFile.toString();
+	            
 	        }
-	        return downloadedFile.toString();
+	        
 	    }
 	 
 	 //List the files from dropbox

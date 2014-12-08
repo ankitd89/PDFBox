@@ -78,11 +78,12 @@ public class PDFBoxController {
 	            return "You failed to upload " + name + " because the file was empty.";
 	        }
 }*/
-    @RequestMapping(value="/dropbox/download",method=RequestMethod.GET)
-    public String RESTDownload() {
+    @RequestMapping(value="/dropbox/download/{file}",method=RequestMethod.GET)
+    public String RESTDownload(@PathVariable ("file") String fileName) {
     	String metadata="";
        try{
-    	metadata=dropbox.downloadFile();
+    	metadata=dropbox.downloadFile(fileName);
+    	System.out.println("in restdownload");
        }catch(Exception e){}
     	return metadata;
     }
