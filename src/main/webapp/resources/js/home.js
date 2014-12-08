@@ -1,6 +1,38 @@
 /**
  * 
  */
+function filterOptions()
+{
+	
+	var selectId = document.getElementById("cboFilter");
+	var selectedValue = selectId.options[selectId.selectedIndex].value;
+	var divAmt = document.getElementById("divAmount");
+	var divDate = document.getElementById("divDate");
+	var divPaymentMode = document.getElementById("divPayment");
+	switch(selectedValue)
+	{
+	case "Amount":
+		divAmt.hidden = false;
+		divDate.hidden = true;
+		divPaymentMode.hidden = true;
+		break;
+	case "Date":
+		divAmt.hidden = true;
+		divDate.hidden = false
+		divPaymentMode.hidden = true;
+		break;
+	case "Payment Mode":
+		divAmt.hidden = true;
+		divDate.hidden = true;
+		divPaymentMode.hidden = false;
+		break;
+	default:
+		divAmt.hidden = true;
+		divDate.hidden = true;
+		divPaymentMode.hidden = true;
+		break;
+	}
+}
  var files = "";
 function fetchAccessToken()
 {
@@ -143,6 +175,8 @@ function showClickedFile(t)
 
 	containerId.appendChild(fileObj);
 }
+
+
 function logout() {
 	window.open("/login", "_self");
 }
