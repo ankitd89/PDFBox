@@ -6,8 +6,7 @@
 <title>PDF Box</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/upload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/home.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/listFiles.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/amountSelect.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/mongoOp.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -87,9 +86,9 @@
 							style="position: relative; left: 0px; top: 0px; width: 100px; height: 30px;"
 							placeholder="Enter Amount" />
 						<button class="btn btn-default" id="btnAmount" type="button"
-							style="position: relative; left: 0px; top: 0px; height: 30px;">
+							style="position: relative; left: 0px; top: 0px; height: 30px;" onclick = "getBillsOnCondition()">
 							<span class="glyphicon glyphicon-search"
-								style="position: relative; left: 0px; top: 0px;"></span>
+								style="position: relative; left: 0px; top: 0px;" onclick = "getBillsOnCondition()"></span>
 						</button>
 					</div>
 					<div class="col-md-6" id="divDate" hidden="true"
@@ -98,9 +97,9 @@
 							style="position: relative; left: -5px; top: 15px; width: 80px; height: 30px">
 							Date Condition </label> <input type="date" id="txtDate"
 							style="position: relative; left: 0px; top: 5px; width: 180px; height: 30px;"
-							placeholder="Enter Date">
+							placeholder="Enter Date"; >
 						<button class="btn btn-default" id="btnDate" type="button"
-							style="position: relative; left: 0px; top: 3px; height: 30px;">
+							style="position: relative; left: 0px; top: 3px; height: 30px;" onclick="getBillsForDate()">
 							<span class="glyphicon glyphicon-search"
 								style="position: relative; left: 0px; top: 0px;"></span>
 						</button>
@@ -116,7 +115,7 @@
 							<option value="cash">Cash</option>
 						</select>
 						<button class="btn btn-default" id="btnPayment" type="button"
-							style="position: relative; left: 0px; top: 0px; height: 30px;">
+							style="position: relative; left: 0px; top: 0px; height: 30px;" onclick= "getEarningOnPaymentType()">
 							<span class="glyphicon glyphicon-search"
 								style="position: relative; left: 0px; top: 0px;"></span>
 						</button>
