@@ -151,4 +151,29 @@ public class MongoUtility{
 		}
 		return amount;
 	}
+	
+	public String getMetaDataForBill(String refe, String user)
+	{
+		Users u;
+		Bill b = new Bill();
+		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
+		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+		u =  (Users) mongoOperation.findOne(new Query(Criteria.where("_id").is(user)), Users.class, "users");
+		System.out.println(u.getEmail());
+		List<Bill> bills=new ArrayList<Bill>();
+		System.out.println("Number of bills : "+ u.getBills().size());
+		bills.addAll( u.getBills());
+		
+		for(int i = 0; i < bills.size(); i++)
+		{
+			Bill tempBill = bills.get(i);
+			System.out.println(tempBill.getBillRef());
+			if(tempBill.getBillRef().equals(refe))	
+			{
+				b = tempBill;
+			}
+		}
+		
+		return "This bill has total of " + b.getTotalBillAmount() + "payed using " + b.getPaymentMode() + ".";
+	}
 }

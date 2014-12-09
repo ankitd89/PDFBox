@@ -117,7 +117,7 @@ function displayFiles()
 		div.appendChild(innerDiv);
 		newlabel.onclick=function(){
 			divContainerId.innerHTML="";
-			showFiles(this.id);
+			showClickedFile(this.id);
 		}
 		//aTag.setAttribute("onclick","showFiles();");
 		//alert(document.getElementById("aTag" + i));
@@ -163,17 +163,39 @@ function showFiles(a)
 
 function showClickedFile(t)
 {
-	alert("in showClickedFile" +t);
-	var containerId=document.getElementById("divFilesDisplay");
-	//containerId.innerHTML="";
-	var fileObj = document.createElement("object");
-	fileObj.data="/resources/images/" +t;
-	fileObj.type="application/pdf";
-	fileObj.left="0px";
-	fileObj.width="400px";
-	fileObj.height="490px";
+		alert("in showClickedFile" +t);
 
-	containerId.appendChild(fileObj);
+		var tempid = document.getElementById(t).innerHTML;
+
+	
+	var refe = tempid;
+	var url = "http://localhost:8080/getMetaDataFroBill/"+refe;
+				alert("url " + url);
+
+	$.ajax({
+		type : "GET",
+		url: "http://localhost:8080/getMetaDataFroBill/"+refe,
+		dataType: "text",
+		success:function(data){
+			alert(data);
+			var containerId=document.getElementById("divFilesDisplay");		
+			containerId.innerHTML=data;
+		},
+		error:function(jqXHR,status,errorThrown){
+		 	alert(status + errorThrown+"error");
+		 }
+
+	});
+	// var containerId=document.getElementById("divFilesDisplay");
+	// //containerId.innerHTML="";
+	// var fileObj = document.createElement("object");
+	// fileObj.data="/resources/images/" +t;
+	// fileObj.type="application/pdf";
+	// fileObj.left="0px";
+	// fileObj.width="400px";
+	// fileObj.height="490px";
+
+	// containerId.appendChild(fileObj);
 }
 
 
