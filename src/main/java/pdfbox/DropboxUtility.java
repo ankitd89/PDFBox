@@ -1,3 +1,4 @@
+package pdfbox;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,14 +17,22 @@ import com.dropbox.core.http.HttpRequestor;
 public class DropboxUtility {
 	final String APP_KEY = "4f242qr19c5vyy8";
 	final String APP_SECRET = "x0gtlkorpr2kqc2";
-	static String accessToken;
-	DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
+	private String accessToken;
+	DbxAppInfo appInfo;
 	DbxClient client;
-	DbxRequestConfig config = new DbxRequestConfig("cmpe_273", Locale
-			.getDefault().toString());
-	
+	DbxRequestConfig config;
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
 	public void login() {
-		
+		 config = new DbxRequestConfig("cmpe_273", Locale
+				.getDefault().toString());
+		 appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
 		DbxWebAuthNoRedirect webAuth = new DbxWebAuthNoRedirect(config, appInfo);
 		@SuppressWarnings("unused")
 		String authorizeUrl = webAuth.start();
@@ -32,8 +41,6 @@ public class DropboxUtility {
 	
 	 public void uploadFile(String file) throws Exception
 	 {
-
-	    login();
 	    FileInputStream inputStream =null;
 	    try 
 	    {
@@ -50,17 +57,15 @@ public class DropboxUtility {
 	}
 
 	//Download file from dropbox
-	 public String downloadFile(String file) throws Exception{
+	 @SuppressWarnings("finally")
+	public String downloadFile(String file) throws Exception{
 
 	        login();
 	        DbxEntry.File downloadedFile = null;
 	        FileOutputStream outputStream = null;
 	        try 
 	        {
-	        	file=file+".pdf";
 	        	System.out.println("In downloadFile.. file is:" +file);
-	        	//ClassLoader classLoader = getClass().getClassLoader();
-	        	//System.out.println(classLoader.getParent().toString());
 	        	File outputFile = new File(file);
 	        	outputStream = new FileOutputStream(outputFile);
 	        	downloadedFile= client.getFile("/" +file, null,outputStream);
@@ -71,11 +76,9 @@ public class DropboxUtility {
 	            
 	        }catch(Exception e){System.out.println("Error" +e);}
 	        
-	        
 	        finally {
 	        	outputStream.close();
 	        	return downloadedFile.toString();
-	            
 	        }
 	        
 	    }

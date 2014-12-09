@@ -1,17 +1,17 @@
+package pdfbox;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Bill;
 import model.Users;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import config.MongoConfigJava;
-
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Criteria;
 
 public class MongoUtility{
 	private String BILLS_COLLECTION = "users";
@@ -34,13 +34,13 @@ public class MongoUtility{
 		}
 	}
 	
-	public String getBillsForAmountWithCondition(double amount, String condition)
+	public String getBillsForAmountWithCondition(double amount, String condition, String currentUser)
 	{
 		String billNames = "";
 		List<Bill> bills = new ArrayList<Bill>();
 		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
-		Query searchUserQuery = new Query(Criteria.where("_id").is(PDFBoxController.currentUser));
+		Query searchUserQuery = new Query(Criteria.where("_id").is(currentUser));
 	    Users savedUser = mongoOperation.findOne(searchUserQuery, Users.class);
 	    bills = savedUser.getBills();
 		try
@@ -75,6 +75,7 @@ public class MongoUtility{
 						break;
 						
 						case "=": {
+							
 							if(billObject.getTotalBillAmount()==amount)
 								billNames +=billObject.getBillRef()+"\n";
 						}
@@ -94,28 +95,30 @@ public class MongoUtility{
 		return billNames;
 	}
 	
-	public List<String> getNumberOfBillsForDate(String date)
+	public String getNumberOfBillsForDate(String date, String currentUser)
 	{
-		List<String> billNames = new ArrayList<String>();
+		String billNames = "";
 		List<Bill> bills = new ArrayList<Bill>();	
-		
 		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
-		
+		Query searchUserQuery = new Query(Criteria.where("_id").is(currentUser));
+	    Users savedUser = mongoOperation.findOne(searchUserQuery, Users.class);
+	    bills = savedUser.getBills();
+	    String[] splitDate = date.split("-");
+	    String newDate = splitDate[1]+"/"+splitDate[2]+"/"+splitDate[0];
 		try
 		{
-			Query q = new Query();
-			q.addCriteria(Criteria.where("billDate").is(date));
-			bills = mongoOperation.find(q, Bill.class);
+			for(int billCount = 0; billCount<bills.size(); billCount++)
+			{
+				Bill billObject = bills.get(billCount);
+				if(billObject.getBillDate().equals(newDate))
+					billNames +=billObject.getBillRef()+"\n";
+			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-		}
-		
-		for(int i = 0; i < bills.size(); i++)
-			billNames.add(bills.get(i).getBillRef());
-		
+		}		
 		return billNames;
 	}
 	
