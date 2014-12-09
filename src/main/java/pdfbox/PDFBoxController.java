@@ -166,8 +166,7 @@ public class PDFBoxController {
 	@RequestMapping(value="dropbox/{email}/getMetaDataFroBill/{billRef}", method = RequestMethod.GET)
 	public String getMetaDataForClickedBill(@PathVariable("email") String email, @PathVariable("billRef") String ref)
 	{
-		ref.substring(0, ref.length()-4);
-		System.out.println("inside rest controller :" + ref);
+		System.out.println("billRef:"+ref);
 		return mongo.getMetaDataForBill(ref, email);
 	}
 	
@@ -177,7 +176,6 @@ public class PDFBoxController {
 	{
 		return "health";
 	}
-	
 	
 	public DropboxUtility createDropBoxUtility(String email)
 	{

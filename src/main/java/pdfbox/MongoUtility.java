@@ -171,6 +171,7 @@ public class MongoUtility{
 			if(tempBill.getBillRef().equals(refe))	
 			{
 				b = tempBill;
+				System.out.println("Metadata found!");
 			}
 		}
 		
