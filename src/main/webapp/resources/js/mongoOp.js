@@ -21,9 +21,11 @@ function getEarningOnPaymentType()
 
 function getBillsOnCondition()
 {
-	alert("in mongoOp getBillsOnCondition");
-	var cnd = "<";
-	var amt = 10.0;
+	
+	var selectId = document.getElementById("cboAmount");
+	var cnd = selectId.options[selectId.selectedIndex].value;
+	var amtId = document.getElementById("txtAmount");
+	var amt = amtId.value;
 	var billCondUrl = "http://localhost:8080/getBillsOnCondition/" + cnd +"/" + amt;
 	$.ajax({
 		type: "GET",
@@ -33,7 +35,8 @@ function getBillsOnCondition()
 
 		success: function(data,status,jqXHR){
 			var d=data;
-			alert("getEarningOnPaymentType" +d);
+			var filterBills = d.split("\n");
+			displayFiles(filterBills);
 		},
 		error:function(jqXHR,status,errorThrown){
 			alert(status + errorThrown + "error in mongoOp");

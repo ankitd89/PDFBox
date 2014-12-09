@@ -2,8 +2,7 @@
  * 
  */
 function filterOptions()
-{
-	
+{	
 	var selectId = document.getElementById("cboFilter");
 	var selectedValue = selectId.options[selectId.selectedIndex].value;
 	var divAmt = document.getElementById("divAmount");
@@ -30,10 +29,11 @@ function filterOptions()
 		divAmt.hidden = true;
 		divDate.hidden = true;
 		divPaymentMode.hidden = true;
+		listAllFiles();
 		break;
 	}
 }
- var files = "";
+ 
 function fetchAccessToken()
 {
 	var access_token ="";
@@ -64,6 +64,7 @@ function fetchAccessToken()
 }	
 
 function listAllFiles(){
+	var files = "";
 	var fileName = "";
 	var listurl = "http://localhost:8080/dropbox/files";
 	$.ajax({
@@ -75,7 +76,7 @@ function listAllFiles(){
 		success:function(data,status,jqXHR){
 			fileName = data;
 			files= fileName.split("\n");
-			displayFiles();			
+			displayFiles(files);			
 		},
 		error:function(jqXHR,status,errorThrown){
 			alert(status + errorThrown+"error");
@@ -83,14 +84,14 @@ function listAllFiles(){
 	});
 }
 
-function displayFiles()
+function displayFiles(displayFilesArray)
 {
 	var containerId= document.getElementById("divContainer");
 	containerId.innerHTML="";
 	var divContainerId= document.getElementById("divFilesDisplay");
 	var div = document.createElement("div");
 	div.className = "row";
-	for(var i=0;i<files.length-1;i++)
+	for(var i=0;i<displayFilesArray.length-1;i++)
 	{
 		var innerDiv= document.createElement("div");
 		innerDiv.className="col-xs-4";
@@ -107,7 +108,7 @@ function displayFiles()
 		newlabel.id="label"+i;
 		var labelid= newlabel.id;
 		//alert(labelid);
-		newlabel.innerHTML = files[i];
+		newlabel.innerHTML = displayFilesArray[i];
 		newlabel.style.wordWrap = "break-word";
 		newlabel.style.height = "30px";
 		newlabel.style.width= "100px";
@@ -119,17 +120,7 @@ function displayFiles()
 			divContainerId.innerHTML="";
 			showClickedFile(this.id);
 		}
-		//aTag.setAttribute("onclick","showFiles();");
-		//alert(document.getElementById("aTag" + i));
-		//document.getElementById("aTag" + i).onclick=function(){
-			
-		//	alert(tempid);
-		//	showFiles(aTag);
-			//alert(this.labelid);
-		//}
-		//aTag.addEventListener("onclick",showFiles(this.labelid));
 	}
-	//var containerId= document.getElementById("divContainer");
 	containerId.appendChild(div);
 }	
 
@@ -137,8 +128,6 @@ function showFiles(a)
 {
 	var tempid = document.getElementById(a).innerHTML;
 	alert(tempid)
-	//alert("Label is " + tempid);
-	//alert(a);
 	var downloadurl = "http://localhost:8080/dropbox/download/" +tempid;
 	$.ajax({
 		type: "GET",
@@ -147,15 +136,9 @@ function showFiles(a)
 		dataType: "text",
 
 		success:function(data,status,jqXHR){
-			//fileName = data;
-			//files= fileName.split("\n");
-			//displayFiles();			
-			alert("File downloaded");
 			showClickedFile(tempid);
-
 		},
 		error:function(jqXHR,status,errorThrown){
-			alert(status + errorThrown+"error");
 		}
 	});
 
@@ -163,8 +146,6 @@ function showFiles(a)
 
 function showClickedFile(t)
 {
-		alert("in showClickedFile" +t);
-
 		var tempid = document.getElementById(t).innerHTML;
 
 	

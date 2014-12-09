@@ -14,6 +14,7 @@ function uploadFormData(){
     type: "POST",
     success: function(data){
       $('#result').html(data);
+      listAllFiles();
     }
   });
 }
