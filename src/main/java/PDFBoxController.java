@@ -117,20 +117,30 @@ public class PDFBoxController {
 		}
 	}
 	
-	@RequestMapping(value="/getBillCount/{date}", method=RequestMethod.GET)
-	public List<String> getBillCount(@PathVariable("date") String date) {
+	@RequestMapping(value ="/getBillsForDate/{date}", method=RequestMethod.GET)
+	@ResponseBody
+	public List<String> getBillsForDate(@PathVariable("date") String date){
 		return mongo.getNumberOfBillsForDate(date);
 	}
 	
-	@RequestMapping(value="/getTotalEarnings/{date}", method=RequestMethod.GET)
-	public double getTotalEarnings(@PathVariable("date") String date) {
-		double amount= mongo.getEarningsForDate(date);
-		return amount;
+	@RequestMapping(value ="/getEarningsForDate/{date}", method=RequestMethod.GET)
+	@ResponseBody
+	public double getEarningsForDate(@PathVariable("date") String date){
+		System.out.println("In rest getEarning for date");
+		return mongo.getEarningsForDate(date);
 	}
 	
-	@RequestMapping(value="/getEarningsForMode/{mode}", method=RequestMethod.GET)
-	public double getModeEarnings(@PathVariable("mode") String mode) {
-		double amount= mongo.getEarningsForPaymentType(mode);
-		return amount;
+	@RequestMapping(value="/getEarningsUponPaymentType/{type}", method= RequestMethod.GET)
+	@ResponseBody
+	public double getEarningOnType(@PathVariable("type") String type){
+		System.out.println("In rest getEarningOnType");
+		return mongo.getEarningsForPaymentType(type);	
+	}
+	
+	@RequestMapping(value ="/getBillsOnCondition/{condition}/{amt}", method=RequestMethod.GET)
+	@ResponseBody
+	public List<String> getEarningsForDate(@PathVariable("condition") String cnd, @PathVariable("amt") double amount){
+		System.out.println("In rest getBillsOnCondition");
+		return mongo.getBillsForAmountWithCondition(amount, cnd);
 	}
 }
