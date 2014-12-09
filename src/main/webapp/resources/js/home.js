@@ -1,6 +1,8 @@
 /**
  * 
  */
+var url = "http://localhost:8080";
+var email="";
 function filterOptions()
 {	
 	var selectId = document.getElementById("cboFilter");
@@ -29,16 +31,17 @@ function filterOptions()
 		divAmt.hidden = true;
 		divDate.hidden = true;
 		divPaymentMode.hidden = true;
-		listAllFiles();
 		break;
 	}
+	listAllFiles();
+
 }
  
 function fetchAccessToken()
 {
 	var access_token ="";
-	var url = window.location.href;
-	var query = url.split("#");
+	var windowUrl = window.location.href;
+	var query = windowUrl.split("#");
 	if(query[1] != null )
 	{
 		var vars = query[1].split("&");
@@ -52,21 +55,35 @@ function fetchAccessToken()
 					break;
 				}
 		}
-		var urlPara =  "http://localhost:8080/accesstokens?access_token="+ access_token.toString();
+		var urlPara =  url + "/accesstokens?access_token="+ access_token.toString();
 		$.ajax({
 	        type: "POST",
 	        contentType: "application/json",
 	        url: urlPara,
-	        dataType: "json",
-	        
+	        dataType: "text",
+	        success:function(data,status,jqXHR){
+				email = data;
+				listAllFiles();
+			},
+			error:function(jqXHR,status,errorThrown){
+			}   
 	    });
+	}
+	else
+	{
+		var query2 = windowUrl.split("?");
+		if(query2[1]!=null){
+			var emailHolder = query2[1].split("=");
+			email = emailHolder[1];
+			listAllFiles();
+		}
 	}
 }	
 
 function listAllFiles(){
 	var files = "";
 	var fileName = "";
-	var listurl = "http://localhost:8080/dropbox/files";
+	var listurl = url + "/dropbox/" + email + "/files";
 	$.ajax({
 		type: "GET",
 		contentType: "application/json",
@@ -96,18 +113,15 @@ function displayFiles(displayFilesArray)
 		var innerDiv= document.createElement("div");
 		innerDiv.className="col-xs-4";
 		innerDiv.id="division"+i;
-		//innerDiv.style.wordWrap ="break-word";
 		var aTag = document.createElement('a');
 		aTag.className = "thumbnail";
 		aTag.id = "aTag"+i;
-		//var img = new Image();
 		var img= document.createElement("IMG");
 		img.src = src="/resources/images/pdfIcon.png";
 		img.id="img"+i;
 		var newlabel = document.createElement("Label");
 		newlabel.id="label"+i;
 		var labelid= newlabel.id;
-		//alert(labelid);
 		newlabel.innerHTML = displayFilesArray[i];
 		newlabel.style.wordWrap = "break-word";
 		newlabel.style.height = "30px";
@@ -127,14 +141,12 @@ function displayFiles(displayFilesArray)
 function showFiles(a)
 {
 	var tempid = document.getElementById(a).innerHTML;
-	alert(tempid)
-	var downloadurl = "http://localhost:8080/dropbox/download/" +tempid;
+	var downloadurl = url + "/dropbox/" + email + "/download/" +tempid;
 	$.ajax({
 		type: "GET",
 		contentType: "application/json",
 		url: downloadurl,
 		dataType: "text",
-
 		success:function(data,status,jqXHR){
 			showClickedFile(tempid);
 		},
@@ -146,19 +158,14 @@ function showFiles(a)
 
 function showClickedFile(t)
 {
-		var tempid = document.getElementById(t).innerHTML;
-
-	
+	var tempid = document.getElementById(t).innerHTML;
 	var refe = tempid;
-	var url = "http://localhost:8080/getMetaDataFroBill/"+refe;
-				alert("url " + url);
-
+	var clickedUrl = url + "/dropbox/" + email + "/getMetaDataFroBill/"+refe;
 	$.ajax({
 		type : "GET",
-		url: "http://localhost:8080/getMetaDataFroBill/"+refe,
+		url: clickedUrl,
 		dataType: "text",
 		success:function(data){
-			alert(data);
 			var containerId=document.getElementById("divFilesDisplay");		
 			containerId.innerHTML=data;
 		},
@@ -167,16 +174,6 @@ function showClickedFile(t)
 		 }
 
 	});
-	// var containerId=document.getElementById("divFilesDisplay");
-	// //containerId.innerHTML="";
-	// var fileObj = document.createElement("object");
-	// fileObj.data="/resources/images/" +t;
-	// fileObj.type="application/pdf";
-	// fileObj.left="0px";
-	// fileObj.width="400px";
-	// fileObj.height="490px";
-
-	// containerId.appendChild(fileObj);
 }
 
 
@@ -185,12 +182,7 @@ function logout() {
 		type: "GET",
 		url: "http://localhost:8080/logout",
 		dataType: "text",
-
 		success:function(data){
-			//fileName = data;
-			//files= fileName.split("\n");
-			//displayFiles();			
-			alert(data);
 		},
 		error:function(jqXHR,status,errorThrown){
 			alert(status + errorThrown+"error");

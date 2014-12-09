@@ -1,3 +1,5 @@
+var url = "http://localhost:8080";
+
 function getEarningOnPaymentType()
 {
 	alert("in mongoOp getEarningOnPaymentType");
@@ -20,19 +22,17 @@ function getEarningOnPaymentType()
 }
 
 function getBillsOnCondition()
-{
-	
+{	
 	var selectId = document.getElementById("cboAmount");
 	var cnd = selectId.options[selectId.selectedIndex].value;
 	var amtId = document.getElementById("txtAmount");
 	var amt = amtId.value;
-	var billCondUrl = "http://localhost:8080/getBillsOnCondition/" + cnd +"/" + amt;
+	var billCondUrl = url + "/dropbox/" + email + "/getBillsOnCondition/" + cnd +"/" + amt;
 	$.ajax({
 		type: "GET",
 		contentType: "application/json",
 		url: billCondUrl,
 		dataType: "text",
-
 		success: function(data,status,jqXHR){
 			var d=data;
 			var filterBills = d.split("\n");
@@ -46,7 +46,6 @@ function getBillsOnCondition()
 
 function getEarningForDate()
 {
-	alert("in mongoOp getEarningForDate");
 	var date = "121214";
 	var earningUrl = "http://localhost:8080/getEarningsForDate/" + date;
 	$.ajax({
@@ -57,7 +56,6 @@ function getEarningForDate()
 
 		success: function(data,status,jqXHR){
 			var d=data;
-			alert("getEarningsForDate" +d);
 		},
 		error:function(jqXHR,status,errorThrown){
 			alert(status + errorThrown + "error in mongoOp");
@@ -67,18 +65,18 @@ function getEarningForDate()
 
 function getBillsForDate()
 {
-	alert("in mongoOp getBillsForDate");
-	var date = "121214";
-	var billUrl = "http://localhost:8080/getBillsForDate/" + date;
+	var dateId = document.getElementById("txtDate"); 
+	var date = dateId.value;
+	var billUrl = url + "/dropbox/" + email + "/getBillsForDate/" + date;
 	$.ajax({
 		type: "GET",
 		contentType: "application/json",
 		url: billUrl,
 		dataType: "text",
-
 		success: function(data,status,jqXHR){
 			var d=data;
-			alert("getBillsForDate" +d);
+			var filterBills = d.split("\n");
+			displayFiles(filterBills);
 		},
 		error:function(jqXHR,status,errorThrown){
 			alert(status + errorThrown + "error in mongoOp");

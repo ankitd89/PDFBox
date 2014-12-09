@@ -1,12 +1,9 @@
 package model;
 import java.util.ArrayList;
-import org.springframework.data.annotation.Id;
-
 /*
  * @abstract: This is bill bean class
  * 
  */
-import org.springframework.data.mongodb.core.mapping.Document;
 
 
 public class Bill

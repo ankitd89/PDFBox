@@ -1,3 +1,5 @@
+//var host = "http://pdfbox.elasticbeanstalk.com";
+var host = "http://localhost:8080";
 function fetchSignUpValues() {
 	var email = document.getElementById("login-username").value;
 	var alertId = document.getElementById("login-alert");
@@ -14,8 +16,8 @@ function fetchSignUpValues() {
 		document.getElementById("lblError").innerHTML = "Email format is invalid";
 		return blnValidate;
 	}
-	var url = "http://localhost:8080/signin/" + email;
-	
+	var url = host + "/signin/" + email;
+	var homeurl = "/home"+"?email="+email;
     $.ajax({
         type: "GET",
         contentType: "application/json; charset=utf-8",
@@ -23,7 +25,7 @@ function fetchSignUpValues() {
         dataType: "text",
         success: function(data,status, jqXHR){
         	if(data == "success")
-        			window.open("/home", "_self");  
+        			window.open(homeurl, "_self");  
         	else
         	{
         		alertId.style.display = "inline";

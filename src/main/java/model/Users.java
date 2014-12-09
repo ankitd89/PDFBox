@@ -13,25 +13,13 @@ public class Users {
 	private String email;
 	@NotEmpty
 	private String accessToken;
-
 	private ArrayList<Bill> bills=new ArrayList<Bill>();
-	
 	public ArrayList<Bill> getBills() {
 		return bills;
 	}
-
-
 	public void setBills(ArrayList<Bill> bills) {
 		this.bills = bills;
 	}
-
-
-	public Users(String email, String accessToken)
-	{
-		this.email = email;
-		this.accessToken = accessToken;
-	}
-	
 	
 	public String getAccessToken() {
 		return accessToken;
@@ -46,5 +34,4 @@ public class Users {
 		this.email = email;
 	}
 	
-
 }

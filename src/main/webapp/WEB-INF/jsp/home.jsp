@@ -12,8 +12,7 @@
      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   </head>
-<body onload="fetchAccessToken(); listAllFiles()"
-	style="overflow: hidden;">
+<body onload="fetchAccessToken();" style="overflow: hidden;">
 	<script type="text/javascript">window.history.forward(1);</script>
 	<div style="top: 0px; height: 50px; border-style: ridge; left: 0px;">
 		<label
