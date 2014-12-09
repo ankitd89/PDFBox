@@ -178,5 +178,20 @@ function showClickedFile(t)
 
 
 function logout() {
+	$.ajax({
+		type: "GET",
+		url: "http://localhost:8080/logout",
+		dataType: "text",
+
+		success:function(data){
+			//fileName = data;
+			//files= fileName.split("\n");
+			//displayFiles();			
+			alert(data);
+		},
+		error:function(jqXHR,status,errorThrown){
+			alert(status + errorThrown+"error");
+		}
+	});
 	window.open("/login", "_self");
 }
