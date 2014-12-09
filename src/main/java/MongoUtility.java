@@ -34,65 +34,63 @@ public class MongoUtility{
 		}
 	}
 	
-	public List<String> getBillsForAmountWithCondition(double amount, String condition)
+	public String getBillsForAmountWithCondition(double amount, String condition)
 	{
-		List<String> billNames = new ArrayList<String>();
+		String billNames = "";
 		List<Bill> bills = new ArrayList<Bill>();
-		
 		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+		Query searchUserQuery = new Query(Criteria.where("_id").is(PDFBoxController.currentUser));
+	    Users savedUser = mongoOperation.findOne(searchUserQuery, Users.class);
+	    bills = savedUser.getBills();
 		try
 		{
-			  switch(condition)
-				{
-					case "<": {
-						Query q = new Query();
-						q.addCriteria(Criteria.where("totalBillAmount").lt(amount));
-						bills = mongoOperation.find(q, Bill.class);
-					}
-					break;
-				
-					case ">": {
-						Query q = new Query();
-						q.addCriteria(Criteria.where("totalBillAmount").gt(amount));
-						bills = mongoOperation.find(q, Bill.class);
-					}
-					break;
+			for(int billCount = 0; billCount<bills.size(); billCount++)
+			{
+				Bill billObject = bills.get(billCount);
+				  switch(condition)
+					{
+						case "<": {
+							if(billObject.getTotalBillAmount()<amount)
+								billNames += billObject.getBillRef()+"\n";
+						}
+						break;
 					
-					case "<=": {
-						Query q = new Query();
-						q.addCriteria(Criteria.where("totalBillAmount").lte(amount));
-						bills = mongoOperation.find(q, Bill.class);
+						case ">": {
+							if(billObject.getTotalBillAmount()>amount)
+								billNames +=billObject.getBillRef()+"\n";
+						}
+						break;
+						
+						case "<=": {
+							if(billObject.getTotalBillAmount()<=amount)
+								billNames +=billObject.getBillRef()+"\n";
+						}
+						break;
+						
+						case ">=": {
+							if(billObject.getTotalBillAmount()>=amount)
+								billNames +=billObject.getBillRef()+"\n";
+						}
+						break;
+						
+						case "=": {
+							if(billObject.getTotalBillAmount()==amount)
+								billNames +=billObject.getBillRef()+"\n";
+						}
+						break;
+						
+						default: {
+							System.out.println("Invalid operator, only <,>,<=,>=,= are allowed");
+						}
+						break;
 					}
-					break;
-					
-					case ">=": {
-						Query q = new Query();
-						q.addCriteria(Criteria.where("totalBillAmount").gte(amount));
-						bills = mongoOperation.find(q, Bill.class);
-					}
-					break;
-					
-					case "=": {
-						Bill bill =  (Bill) mongoOperation.findOne(new Query(Criteria.where("totalBillAmount").is(amount)), Bill.class, "bills");
-						bills.add(bill);
-					}
-					break;
-					
-					default: {
-						System.out.println("Invalid operator, only <,>,<=,>=,= are allowed");
-					}
-					break;
-				}
+			}
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
-		}
-		
-		for(int i = 0; i < bills.size(); i++)
-			billNames.add(bills.get(i).getBillRef());
-		
+		}		
 		return billNames;
 	}
 	
@@ -150,5 +148,29 @@ public class MongoUtility{
 			e.printStackTrace();
 		}
 		return amount;
+	}
+	public String getMetaDataForBill(String refe, String user)
+	{
+		Users u;
+		Bill b = new Bill();
+		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
+		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+		u =  (Users) mongoOperation.findOne(new Query(Criteria.where("_id").is(user)), Users.class, "users");
+		System.out.println(u.getEmail());
+		List<Bill> bills=new ArrayList<Bill>();
+		System.out.println("Number of bills : "+ u.getBills().size());
+		bills.addAll( u.getBills());
+		
+		for(int i = 0; i < bills.size(); i++)
+		{
+			Bill tempBill = bills.get(i);
+			System.out.println(tempBill.getBillRef());
+			if(tempBill.getBillRef().equals(refe))	
+			{
+				b = tempBill;
+			}
+		}
+		
+		return "This bill has total of " + b.getTotalBillAmount() + "payed using " + b.getPaymentMode() + ".";
 	}
 }

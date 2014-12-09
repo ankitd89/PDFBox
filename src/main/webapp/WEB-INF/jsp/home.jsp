@@ -74,7 +74,7 @@
 						style="position: relative; left: 0px; top: 0px; width: 550px; height: 30px">
 						<label id="lblAmount"
 							style="position: relative; left: -5px; top: 5px; width: 80px; height: 30px">
-							Amount Condition </label> <select id="cboFilter"
+							Amount Condition </label> <select id="cboAmount"
 							style="position: relative; left: 0px; top: 0px; width: 150px; height: 30px">
 							<option value=" "></option>
 							<option value="=">Equal</option>
@@ -88,7 +88,10 @@
 						<button class="btn btn-default" id="btnAmount" type="button"
 							style="position: relative; left: 0px; top: 0px; height: 30px;" onclick = "getBillsOnCondition()">
 							<span class="glyphicon glyphicon-search"
-								style="position: relative; left: 0px; top: 0px;" onclick = "getBillsOnCondition()"></span>
+								style="position: relative; left: 0px; top: 0px;" ></span>
+						</button>
+						<button class="btn btn-info" id="btnGetEarningsAmount" type="button"
+							style="position: absolute; left: 100px; top: 60px; height: 30px; width: 180px;" onclick = "">Get Total Earnings
 						</button>
 					</div>
 					<div class="col-md-6" id="divDate" hidden="true"
@@ -102,6 +105,9 @@
 							style="position: relative; left: 0px; top: 3px; height: 30px;" onclick="getBillsForDate()">
 							<span class="glyphicon glyphicon-search"
 								style="position: relative; left: 0px; top: 0px;"></span>
+						</button>
+						<button class="btn btn-info" id="btnGetEarningsAmount" type="button"
+							style="position: absolute; left: 100px; top: 60px; height: 30px; width: 180px;" onclick = "">Get Total Earnings
 						</button>
 					</div>
 					<div class="col-md-6" id="divPayment" hidden="true"
@@ -118,6 +124,9 @@
 							style="position: relative; left: 0px; top: 0px; height: 30px;" onclick= "getEarningOnPaymentType()">
 							<span class="glyphicon glyphicon-search"
 								style="position: relative; left: 0px; top: 0px;"></span>
+						</button>
+						<button class="btn btn-info" id="btnGetEarningsAmount" type="button"
+							style="position: absolute; left: 100px; top: 60px; height: 30px; width: 180px;" onclick = "">Get Total Earnings
 						</button>
 					</div>
 				</div>

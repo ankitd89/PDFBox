@@ -88,7 +88,6 @@ public class DropboxUtility {
 	        System.out.println("Files in the root path:");
 	        String files="";
 	        for (DbxEntry child : listing.children) {
-	            System.out.println("	" + child.name + ": " + child.toString());
 	            files+=child.name+"\n";
 	        }
 	        return files;

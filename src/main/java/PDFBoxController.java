@@ -155,7 +155,17 @@ public class PDFBoxController {
 	
 	@RequestMapping(value ="/getBillsOnCondition/{condition}/{amt}", method=RequestMethod.GET)
 	@ResponseBody
-	public List<String> getEarningsForDate(@PathVariable("condition") String cnd, @PathVariable("amt") double amount){
+	public String getEarningsForDate(@PathVariable("condition") String cnd, @PathVariable("amt") double amount){
+		System.out.println("In rest getBillsOnCondition");
 		return mongo.getBillsForAmountWithCondition(amount, cnd);
 	}
+	
+	@RequestMapping(value="/getMetaDataFroBill/{billRef}", method = RequestMethod.GET)
+	public String getMetaDataForClickedBill(@PathVariable("billRef") String ref)
+	{
+		ref.substring(0, ref.length()-4);
+		System.out.println("inside rest controller :" + ref);
+		return mongo.getMetaDataForBill(ref, currentUser);
+	}
+	
 }
