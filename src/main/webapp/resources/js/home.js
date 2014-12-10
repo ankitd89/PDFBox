@@ -88,6 +88,8 @@ function fetchAccessToken()
 function listAllFiles(){
 	var files = "";
 	var fileName = "";
+	var billDiv= document.getElementById("billDetailDiv");
+	billDiv.hidden=true;
 	var listurl = url + "/dropbox/" + email + "/files";
 	$.ajax({
 		type: "GET",
@@ -139,11 +141,6 @@ function displayFiles(displayFilesArray)
 		innerDiv.appendChild(aTag);
 		div.appendChild(innerDiv);
 		newlabel.onclick=function(){
-			
-
-			var billDiv= document.getElementById("billDetailDiv");
-			billDiv.hidden=true;
-
 			showClickedFile(this.id);
 		}
 	}

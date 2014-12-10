@@ -2,7 +2,6 @@ var url = "http://localhost:8080";
 
 function getEarningOnPaymentType()
 {
-	alert("in mongoOp getEarningOnPaymentType");
 	
 	var selectId =document.getElementById("cboPayment");
 	var type=selectId.options[selectId.selectedIndex].value;
