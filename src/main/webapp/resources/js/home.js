@@ -124,7 +124,7 @@ function displayFiles(displayFilesArray)
 		var labelid= newlabel.id;
 		var tempFileName = displayFilesArray[i];
 		tempFileName = tempFileName.substring(0,tempFileName.length-4);
-		alert(tempFileName);
+		
 		newlabel.innerHTML = tempFileName;
 		newlabel.style.wordWrap = "break-word";
 		newlabel.style.height = "30px";
@@ -134,7 +134,7 @@ function displayFiles(displayFilesArray)
 		innerDiv.appendChild(aTag);
 		div.appendChild(innerDiv);
 		newlabel.onclick=function(){
-			//divContainerId.innerHTML="";
+			
 
 			var billDiv= document.getElementById("billDetailDiv");
 			billDiv.hidden=true;
@@ -173,15 +173,15 @@ function showClickedFile(t)
 		url: clickedUrl,
 		dataType: "text",
 		success:function(data){
-			alert(data +"data");
+			
 			var billDiv= document.getElementById("billDetailDiv");
 			billDiv.hidden=false;
 			var dataStr = data.split("\n");
-			alert("data is:" +data);
+			
 			var billRef = dataStr[0].split(":");
 			var totalAmount= dataStr[1].split(":");
 			var cardType = dataStr[2].split(":");
-			alert("card type=" +cardType[1]);
+			
 			
 			var billDivId= document.getElementById("billRefDiv");
 			var billLabel=document.getElementById("billLabelId");		
@@ -198,8 +198,7 @@ function showClickedFile(t)
 			cardLabel.innerHTML=cardType[1];
 			cardDivId.appendChild(cardLabel);
 			
-			//var containerId=document.getElementById("divFilesDisplay");		
-			//containerId.innerHTML=data;
+			
 		},
 		error:function(jqXHR,status,errorThrown){
 		 	alert(status + errorThrown+"error");

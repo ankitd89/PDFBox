@@ -17,7 +17,7 @@ function getEarningOnPaymentType()
 			var d=data;
 			var filterBills = d.split("\n");
 			displayFiles(filterBills);
-			alert("getEarningOnPaymentType" +d);
+			
 		},
 		error:function(jqXHR,status,errorThrown){
 			alert(status + errorThrown + "error in mongoOp");
@@ -41,25 +41,6 @@ function getBillsOnCondition()
 			var d=data;
 			var filterBills = d.split("\n");
 			displayFiles(filterBills);
-		},
-		error:function(jqXHR,status,errorThrown){
-			alert(status + errorThrown + "error in mongoOp");
-		}
-	});
-}
-
-function getEarningForDate()
-{
-	var date = "121214";
-	var earningUrl = "http://localhost:8080/getEarningsForDate/" + date;
-	$.ajax({
-		type: "GET",
-		contentType: "application/json",
-		url: earningUrl,
-		dataType: "text",
-
-		success: function(data,status,jqXHR){
-			var d=data;
 		},
 		error:function(jqXHR,status,errorThrown){
 			alert(status + errorThrown + "error in mongoOp");
