@@ -3,8 +3,10 @@ var url = "http://localhost:8080";
 function getEarningOnPaymentType()
 {
 	alert("in mongoOp getEarningOnPaymentType");
-	var type = "Credit";
-	var paymentUrl = "http://localhost:8080/getEarningsUponPaymentType/" + type;
+	
+	var selectId =document.getElementById("cboPayment");
+	var type=selectId.options[selectId.selectedIndex].value;
+	var paymentUrl = "/dropbox/"+email+"/getEarningsUponPaymentType/" + type;
 	$.ajax({
 		type: "GET",
 		contentType: "application/json",
@@ -13,6 +15,8 @@ function getEarningOnPaymentType()
 
 		success: function(data,status,jqXHR){
 			var d=data;
+			var filterBills = d.split("\n");
+			displayFiles(filterBills);
 			alert("getEarningOnPaymentType" +d);
 		},
 		error:function(jqXHR,status,errorThrown){

@@ -30,7 +30,21 @@
       <div id= "divFilesDisplay" class="col-lg-4 "
         style="border: thick; border-style: solid; height: 500px; ">
         </object>
-
+        <div id="billDetailDiv" class = "row-xs-3" style="border: thick; border-style: solid; position: relative; top:20px; height: 300px;" hidden="true">
+        	<label style="position: absolute; left: 140px; top:10px; font-size: large;"> Bill Details </label>
+        	<div id="billRefDiv" class = "row-xs-1" style="border-style: solid; position: relative; left:25px; top:45px; height: 40px; width: 320px;">
+        		<label id="billRefLabel"; style="position:absolute; top:10px;"> Bill Reference:</label>
+        		<label id="billLabelId"; style="position:absolute; left:150px; top:10px;"></label>
+        	</div>
+        	<div id="totalAmtDiv" class = "row-xs-1" style="border-style: solid; position: relative; left:25px; top:65px; height: 40px; width: 320px;">
+        		<label id="totalAmtLabel"; style="position:absolute; top:10px;"> Total Amount:</label>
+        		<label id="amtLabelId"; style="position:absolute; left:150px; top:10px;"></label>
+        	</div>
+        	<div id="cardTypeDiv" class = "row-xs-1" style="border-style: solid; position: relative; left:25px; top:85px; height: 40px; width: 320px;">
+        		<label id="cardTypeLabel"; style="position:absolute; top:10px;"> Card Type:</label>
+        		<label id="cardLabelId"; style="position:absolute; left:150px; top:10px;"></label>
+        	</div>
+        </div>
       </div>
 			<div class="col-lg-4 "
 				style="border: thick; border-style: solid; height: 500px;">
@@ -89,9 +103,7 @@
 							<span class="glyphicon glyphicon-search"
 								style="position: relative; left: 0px; top: 0px;" ></span>
 						</button>
-						<button class="btn btn-info" id="btnGetEarningsAmount" type="button"
-							style="position: absolute; left: 100px; top: 60px; height: 30px; width: 180px;" onclick = "">Get Total Earnings
-						</button>
+						
 					</div>
 					<div class="col-md-6" id="divDate" hidden="true"
 						style="position: relative; left: 0px; top: 0px; width: 550px; height: 30px">
@@ -105,9 +117,7 @@
 							<span class="glyphicon glyphicon-search"
 								style="position: relative; left: 0px; top: 0px;"></span>
 						</button>
-						<button class="btn btn-info" id="btnGetEarningsAmount" type="button"
-							style="position: absolute; left: 100px; top: 60px; height: 30px; width: 180px;" onclick = "">Get Total Earnings
-						</button>
+						
 					</div>
 					<div class="col-md-6" id="divPayment" hidden="true"
 						style="position: relative; left: 0px; top: 0px; width: 550px; height: 30px">
@@ -124,9 +134,7 @@
 							<span class="glyphicon glyphicon-search"
 								style="position: relative; left: 0px; top: 0px;"></span>
 						</button>
-						<button class="btn btn-info" id="btnGetEarningsAmount" type="button"
-							style="position: absolute; left: 100px; top: 60px; height: 30px; width: 180px;" onclick = "">Get Total Earnings
-						</button>
+						
 					</div>
 				</div>
 				<div id="result" hidden="true"></div>

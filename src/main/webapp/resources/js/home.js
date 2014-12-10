@@ -134,7 +134,11 @@ function displayFiles(displayFilesArray)
 		innerDiv.appendChild(aTag);
 		div.appendChild(innerDiv);
 		newlabel.onclick=function(){
-			divContainerId.innerHTML="";
+			//divContainerId.innerHTML="";
+
+			var billDiv= document.getElementById("billDetailDiv");
+			billDiv.hidden=true;
+
 			showClickedFile(this.id);
 		}
 	}
@@ -169,8 +173,33 @@ function showClickedFile(t)
 		url: clickedUrl,
 		dataType: "text",
 		success:function(data){
-			var containerId=document.getElementById("divFilesDisplay");		
-			containerId.innerHTML=data;
+			alert(data +"data");
+			var billDiv= document.getElementById("billDetailDiv");
+			billDiv.hidden=false;
+			var dataStr = data.split("\n");
+			alert("data is:" +data);
+			var billRef = dataStr[0].split(":");
+			var totalAmount= dataStr[1].split(":");
+			var cardType = dataStr[2].split(":");
+			alert("card type=" +cardType[1]);
+			
+			var billDivId= document.getElementById("billRefDiv");
+			var billLabel=document.getElementById("billLabelId");		
+			billLabel.innerHTML=billRef[1]; 
+			billDivId.appendChild(billLabel);
+
+			var amountDivId= document.getElementById("totalAmtDiv");
+			var amtLabel=document.getElementById("amtLabelId");
+			amtLabel.innerHTML=totalAmount[1]; 
+			amountDivId.appendChild(amtLabel);
+
+			var cardDivId= document.getElementById("cardTypeDiv");
+			var cardLabel = document.getElementById("cardLabelId");
+			cardLabel.innerHTML=cardType[1];
+			cardDivId.appendChild(cardLabel);
+			
+			//var containerId=document.getElementById("divFilesDisplay");		
+			//containerId.innerHTML=data;
 		},
 		error:function(jqXHR,status,errorThrown){
 		 	alert(status + errorThrown+"error");

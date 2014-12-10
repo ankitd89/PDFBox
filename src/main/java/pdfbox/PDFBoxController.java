@@ -151,10 +151,10 @@ public class PDFBoxController {
 		return mongo.getEarningsForDate(date);
 	}
 	
-	@RequestMapping(value="/getEarningsUponPaymentType/{type}", method= RequestMethod.GET)
+	@RequestMapping(value="dropbox/{email}/getEarningsUponPaymentType/{type}", method= RequestMethod.GET)
 	@ResponseBody
-	public double getEarningOnType(@PathVariable("type") String type){
-		return mongo.getEarningsForPaymentType(type);	
+	public String getEarningOnType(@PathVariable("email")String email, @PathVariable("type") String type){
+		return mongo.getEarningsForPaymentType(type,email);	
 	}
 	
 	@RequestMapping(value ="/dropbox/{email}/getBillsOnCondition/{condition}/{amt:.+}", method=RequestMethod.GET)

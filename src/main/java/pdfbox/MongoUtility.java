@@ -139,18 +139,31 @@ public class MongoUtility{
 		return amount;
 	}
 	
-	public double getEarningsForPaymentType(String type){
+	public String getEarningsForPaymentType(String type, String currentUser){
+		String billNamesCash="";
+		String billNamesCard="";
 		List<Bill> bills = new ArrayList<Bill>();		
 		ApplicationContext ctx =  new AnnotationConfigApplicationContext(MongoConfigJava.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
-		double amount=0;
+		Query searchUserQuery = new Query(Criteria.where("_id").is(currentUser));
+	    Users savedUser = mongoOperation.findOne(searchUserQuery, Users.class);
+	    bills = savedUser.getBills();
 		try{
-		Bill bill =  (Bill) mongoOperation.findOne(new Query(Criteria.where("paymentMode").is(type)), Bill.class, "bills");
-		amount+= bill.getTotalBillAmount();
+			for(int billCount = 0; billCount<bills.size(); billCount++)
+			{
+				Bill billObject = bills.get(billCount);
+				if(billObject.getPaymentMode().equalsIgnoreCase("cash"))
+					billNamesCash +=billObject.getBillRef()+"\n";
+				else
+					billNamesCard += billObject.getBillRef()+"\n";
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return amount;
+		if(type.equalsIgnoreCase("cash"))
+			return billNamesCash;
+		else
+			return billNamesCard;
 	}
 	public String getMetaDataForBill(String refe, String user)
 	{
@@ -175,6 +188,6 @@ public class MongoUtility{
 			}
 		}
 		
-		return "This bill has total of " + b.getTotalBillAmount() + "payed using " + b.getPaymentMode() + ".";
+		return "The bill is:"+b.getBillRef() + "\nThis bill has total of:" + b.getTotalBillAmount() + "\npayed using:" + b.getPaymentMode() + "\n";
 	}
 }
