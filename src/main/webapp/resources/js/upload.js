@@ -1,6 +1,15 @@
 var staticUrl = "http://localhost:8080";
 
 function uploadFormData(){
+	var filesInput = document.getElementById("file2");
+	if(filesInput.files[0] == null || filesInput.files[0] == "")
+	{
+		 var header="ERROR";
+	     var msg="Please Select File!"
+	     alertMessage(header,msg);  
+	     return;
+	}
+		
     $('#result').html('');
   var oMyForm = new FormData();
   oMyForm.append("file", file2.files[0]);
@@ -24,6 +33,10 @@ function uploadFormData(){
        alertMessage(header,msg);      
     },
   error: function(jqXHR, status, errorThrown){
+	  var header="ERROR";
+	    var msg="Could not connect to Dropbox!! Please Try Again!"
+	    alertMessage(header,msg);
+	    console.log(status + " " + errorThrown);
   }
   });
 }

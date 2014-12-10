@@ -67,6 +67,10 @@ function fetchAccessToken()
 				listAllFiles();
 			},
 			error:function(jqXHR,status,errorThrown){
+				var header="ERROR";
+			    var msg="Could not connect to Dropbox!! Please Try Again!"
+			    alertMessage(header,msg);
+			    console.log(status + " " + errorThrown);
 			}   
 	    });
 	}
@@ -103,7 +107,11 @@ function listAllFiles(){
 			displayFiles(files);			
 		},
 		error:function(jqXHR,status,errorThrown){
-			alert(status + errorThrown+"error");
+			var header="ERROR";
+		    var msg="Could not connect to Dropbox!! Please Try Again!"
+		    alertMessage(header,msg);
+		    console.log(status + " " + errorThrown);
+			//alert(status + errorThrown+"error");
 		}
 	});
 }
@@ -160,6 +168,10 @@ function showFiles(a)
 			showClickedFile(tempid);
 		},
 		error:function(jqXHR,status,errorThrown){
+			var header="ERROR";
+		    var msg="Could not connect to Dropbox!! Please Try Again!"
+		    alertMessage(header,msg);
+		    console.log(status + " " + errorThrown);
 		}
 	});
 
@@ -203,7 +215,11 @@ function showClickedFile(t)
 			
 		},
 		error:function(jqXHR,status,errorThrown){
-		 	alert(status + errorThrown+"error");
+			var header="ERROR";
+		    var msg="Could not connect to Dropbox!! Please Try Again!"
+		    alertMessage(header,msg);
+		    console.log(status + " " + errorThrown);
+		 	//alert(status + errorThrown+"error");
 		 }
 
 	});

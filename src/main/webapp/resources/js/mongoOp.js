@@ -27,7 +27,11 @@ function getEarningOnPaymentType()
 			
 		},
 		error:function(jqXHR,status,errorThrown){
-			alert(status + errorThrown + "error in mongoOp");
+			var header="ERROR";
+		    var msg="Could not connect to Dropbox!! Please Try Again!"
+		    alertMessage(header,msg);
+		    console.log(status + " " + errorThrown);
+			//alert(status + errorThrown + "error in mongoOp");
 		}
 	});
 }
@@ -58,7 +62,11 @@ function getBillsOnCondition()
 			displayFiles(filterBills);
 		},
 		error:function(jqXHR,status,errorThrown){
-			alert(status + errorThrown + "error in mongoOp");
+			var header="ERROR";
+		    var msg="Could not connect to Dropbox!! Please Try Again!"
+		    alertMessage(header,msg);
+		    console.log(status + " " + errorThrown);
+			//alert(status + errorThrown + "error in mongoOp");
 		}
 	});
 }
@@ -88,7 +96,11 @@ if(document.getElementById("txtDate").value=='')
 			displayFiles(filterBills);
 		},
 		error:function(jqXHR,status,errorThrown){
-			alert(status + errorThrown + "error in mongoOp");
+			var header="ERROR";
+		    var msg="Could not connect to Dropbox!! Please Try Again!"
+		    alertMessage(header,msg);
+		    console.log(status + " " + errorThrown);
+			//alert(status + errorThrown + "error in mongoOp");
 		}
 	});
 }

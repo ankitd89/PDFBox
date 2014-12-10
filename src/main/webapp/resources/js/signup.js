@@ -33,7 +33,11 @@ function fetchSignUpValues() {
         	}
         },
         error: function(jqXHR, status, errorThrown){
-            alert(status + errorThrown);
+        	var header="ERROR";
+		    var msg="Could not connect to Dropbox!! Please Try Again!"
+		    alertMessage(header,msg);
+		    console.log(status + " " + errorThrown);
+        	//alert(status + errorThrown);
         }
     });
 }
