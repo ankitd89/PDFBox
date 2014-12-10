@@ -151,10 +151,10 @@ public class PDFBoxController {
 		return mongo.getEarningsForDate(date);
 	}
 	
-	@RequestMapping(value="/getEarningsUponPaymentType/{type}", method= RequestMethod.GET)
+	@RequestMapping(value="dropbox/{email}/getEarningsUponPaymentType/{type}", method= RequestMethod.GET)
 	@ResponseBody
-	public double getEarningOnType(@PathVariable("type") String type){
-		return mongo.getEarningsForPaymentType(type);	
+	public String getEarningOnType(@PathVariable("email")String email, @PathVariable("type") String type){
+		return mongo.getEarningsForPaymentType(type,email);	
 	}
 	
 	@RequestMapping(value ="/dropbox/{email}/getBillsOnCondition/{condition}/{amt:.+}", method=RequestMethod.GET)
@@ -166,8 +166,7 @@ public class PDFBoxController {
 	@RequestMapping(value="dropbox/{email}/getMetaDataFroBill/{billRef}", method = RequestMethod.GET)
 	public String getMetaDataForClickedBill(@PathVariable("email") String email, @PathVariable("billRef") String ref)
 	{
-		ref.substring(0, ref.length()-4);
-		System.out.println("inside rest controller :" + ref);
+		System.out.println("billRef:"+ref);
 		return mongo.getMetaDataForBill(ref, email);
 	}
 	
@@ -177,7 +176,6 @@ public class PDFBoxController {
 	{
 		return "health";
 	}
-	
 	
 	public DropboxUtility createDropBoxUtility(String email)
 	{
