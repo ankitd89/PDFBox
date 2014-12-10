@@ -128,9 +128,9 @@ function displayFiles(displayFilesArray)
 		newlabel.id="label"+i;
 		var labelid= newlabel.id;
 		var tempFileName = displayFilesArray[i];
-		tempFileName = tempFileName.substring(0,tempFileName.length-4);
+		tempFileName = tempFileName.split(".");
 		
-		newlabel.innerHTML = tempFileName;
+		newlabel.innerHTML = tempFileName[0];
 		newlabel.style.wordWrap = "break-word";
 		newlabel.style.height = "30px";
 		newlabel.style.width= "100px";
