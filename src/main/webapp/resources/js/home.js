@@ -88,6 +88,8 @@ function fetchAccessToken()
 function listAllFiles(){
 	var files = "";
 	var fileName = "";
+	var billDiv= document.getElementById("billDetailDiv");
+	billDiv.hidden=true;
 	var listurl = url + "/dropbox/" + email + "/files";
 	$.ajax({
 		type: "GET",
@@ -128,9 +130,9 @@ function displayFiles(displayFilesArray)
 		newlabel.id="label"+i;
 		var labelid= newlabel.id;
 		var tempFileName = displayFilesArray[i];
-		tempFileName = tempFileName.substring(0,tempFileName.length-4);
+		tempFileName = tempFileName.split(".");
 		
-		newlabel.innerHTML = tempFileName;
+		newlabel.innerHTML = tempFileName[0];
 		newlabel.style.wordWrap = "break-word";
 		newlabel.style.height = "30px";
 		newlabel.style.width= "100px";
@@ -139,11 +141,6 @@ function displayFiles(displayFilesArray)
 		innerDiv.appendChild(aTag);
 		div.appendChild(innerDiv);
 		newlabel.onclick=function(){
-			
-
-			var billDiv= document.getElementById("billDetailDiv");
-			billDiv.hidden=true;
-
 			showClickedFile(this.id);
 		}
 	}
