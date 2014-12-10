@@ -112,6 +112,10 @@ public class DropboxUtility {
         });
         
 	  }
- 
- 
+	 
+	 public void deleteFile(String path) throws DbxException
+	 {
+		 	client.delete("/"+path);
+	 }
+	 
 }

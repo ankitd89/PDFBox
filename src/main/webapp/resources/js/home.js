@@ -139,13 +139,21 @@ function displayFiles(displayFilesArray)
 		var labelid= newlabel.id;
 		var tempFileName = displayFilesArray[i];
 		tempFileName = tempFileName.split(".");
-		
+		var deleteTag = document.createElement('a');
+		deleteTag.id = tempFileName[0];
+		var spanTag = document.createElement('span');
+		spanTag.className ="glyphicon glyphicon-trash";
+		deleteTag.appendChild(spanTag);
+		deleteTag.onclick=function(){
+			deleteFile(this.id);
+		}
 		newlabel.innerHTML = tempFileName[0];
 		newlabel.style.wordWrap = "break-word";
 		newlabel.style.height = "30px";
 		newlabel.style.width= "100px";
 		aTag.appendChild(img);
 		aTag.appendChild(newlabel);
+		aTag.appendChild(deleteTag);
 		innerDiv.appendChild(aTag);
 		div.appendChild(innerDiv);
 		newlabel.onclick=function(){
@@ -177,6 +185,44 @@ function showFiles(a)
 
 }
 
+function deleteFile(fileId)
+{
+	var fileStringName = document.getElementById(fileId);
+	var clickedUrl = url + "/dropbox/" + email + "/delete/"+fileStringName.id;
+	$.ajax({
+		type : "POST",
+		url: clickedUrl,
+		contentType: "application/json",
+		dataType: "text",
+		success:function(data){
+			var abc = data;
+			if(abc == "success")
+				{
+				 var header="Awesome";
+			     var msg="Delete Successful!!!!"
+			       alertMessage(header,msg);  
+				
+				}
+			else
+			{
+				var header="ERROR";
+			    var msg="Could not connect to Dropbox!! Please Try Again!"
+			    alertMessage(header,msg);
+			    console.log(status + " " + errorThrown);
+			}
+				
+		},
+		error:function(jqXHR,status,errorThrown){
+			var header="ERROR";
+		    var msg="Could not connect to Dropbox!! Please Try Again!"
+		    alertMessage(header,msg);
+		    console.log(status + " " + errorThrown);
+		 }
+	});
+	
+
+}
+
 function showClickedFile(t)
 {
 	var tempid = document.getElementById(t).innerHTML;
@@ -187,16 +233,21 @@ function showClickedFile(t)
 		url: clickedUrl,
 		dataType: "text",
 		success:function(data){
-			
 			var billDiv= document.getElementById("billDetailDiv");
-			billDiv.hidden=false;
 			var dataStr = data.split("\n");
-			
+			billDiv.hidden=true;
 			var billRef = dataStr[0].split(":");
 			var totalAmount= dataStr[1].split(":");
 			var cardType = dataStr[2].split(":");
 			
-			
+			if(billRef[1] == "null" || cardType[1] == "null" || totalAmount[1] == "0.0" )
+			{
+				var header="ERROR";
+				var msg="There is no meta data for file. Delete the file and upload again!";
+				alertMessage(header,msg);
+				return;
+			}
+			billDiv.hidden=false;
 			var billDivId= document.getElementById("billRefDiv");
 			var billLabel=document.getElementById("billLabelId");		
 			billLabel.innerHTML=billRef[1]; 

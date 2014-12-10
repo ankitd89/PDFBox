@@ -74,6 +74,36 @@ public class PDFBoxController {
     	return metadata;
     }
     
+    @RequestMapping(value="/dropbox/{email}/delete/{filename}",method=RequestMethod.POST)
+    public String RESTDelete(@PathVariable("email") String email, @PathVariable("filename") String filename) 
+    {
+       try{
+    	   	Query searchUserQuery = new Query(Criteria.where("_id").is(email));
+	   	    Users savedUser = mongoOperation.findOne(searchUserQuery, Users.class);
+	   		DropboxUtility dropboxUtility = new DropboxUtility();
+	   	 	dropboxUtility.setAccessToken(savedUser.getAccessToken());
+	   	 	dropboxUtility.login();
+	   	 	dropboxUtility.deleteFile(filename + ".pdf");
+		   	int increment = 0;
+		   	int listSize = savedUser.getBills().size();
+	   	 	while(increment<listSize) {
+   	 	        Bill bill = savedUser.getBills().get(increment);
+   	 	        if (bill.getBillRef().equals(filename)) {
+   	 	          savedUser.getBills().remove(increment);
+   	 	          break;
+   	 	        }
+   	 	        increment = increment+1;
+	   	 	}
+	   	 	mongoOperation.save(savedUser);
+   	 		return "success";
+	   	 	
+       }
+       catch(Exception e){
+    	   return "failure";
+       }
+    	
+    }
+    
     @RequestMapping(value="/dropbox/{email}/files",method=RequestMethod.GET)
     public String RESTListFiles(@PathVariable("email") String email) 
     {

@@ -145,7 +145,7 @@
 
 <div id="openModal" class="modalDialog">
 	<div>
-		<a href="#close" title="Close" class="close">X</a>
+		<a href="" title="Close" class="close">X</a>
 		<div id="msg">
 		
 		</div>
