@@ -39,7 +39,7 @@
 						style="position: absolute; left: 10px; top: 8px;">Browse</label>
 					<div class="col-md-6"
 						style="position: relative; left: 50px; top: 0px; width: 550px; height: 50px">
-						<div class="input-group"
+						<div class="input-group" id="file_div"
 							style="position: relative; left: 0px; top: 0px; width: 225px; height: 50px">
 							<input id="file2" name="file2" class="form-control"
 								placeholder="No file selected" type="file"

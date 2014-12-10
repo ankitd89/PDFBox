@@ -42,6 +42,7 @@ function fetchAccessToken()
 	var access_token ="";
 	var windowUrl = window.location.href;
 	var query = windowUrl.split("#");
+	var query2 = windowUrl.split("?");
 	if(query[1] != null )
 	{
 		var vars = query[1].split("&");
@@ -69,14 +70,18 @@ function fetchAccessToken()
 			}   
 	    });
 	}
-	else
+	else if(query2[1] != null)
 	{
-		var query2 = windowUrl.split("?");
+		
 		if(query2[1]!=null){
 			var emailHolder = query2[1].split("=");
 			email = emailHolder[1];
 			listAllFiles();
 		}
+	}
+	else
+	{
+		window.open("/login", "_self");
 	}
 }	
 
@@ -185,7 +190,6 @@ function logout() {
 		success:function(data){
 		},
 		error:function(jqXHR,status,errorThrown){
-			alert(status + errorThrown+"error");
 		}
 	});
 	window.open("/login", "_self");

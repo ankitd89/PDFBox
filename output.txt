@@ -11,9 +11,9 @@ Thank	  you	  for	  shopping	  at	  7 -­‐ELEVEN	  
 2	  this	  is	  ekta	  product	   	   	  	  	  	  	  	  	   13.13F	  
 	  
 TOTAL	  CRV 	   	   	   0.10	  
-SUBTOTAL	   	   	   131.35	  
-TOTAL	  DUE 	   	   	   131.35	  
-MASTERCA	   	   	   131.35	  
+SUBTOTAL	   	   	   55.35	  
+TOTAL	  DUE 	   	   	   55.35	  
+CASH	  	   	   55.35	  
 CORPORATE/MULTICURRENCY	  
 ACCT#:	  ************5131 	  
 Approval#:	  770205 	  
@@ -21,7 +21,7 @@ Auth	  Code:	  0 	  
 Approval	  Time:	  002135 	  
 Store#:	  17195 	  
 Term#:	  00071719522	  08 	  
-Ref#:	  9500	  95	  044	  6 	  
+Ref#:	  5 555	   95	  4 44	  6 	  
 Approved	  
 	  
 Customer	  Agrees	  to	  pay	  the	  above 	  
