@@ -14,7 +14,7 @@ public class PDFBoxUIController {
 	}
 	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
-	public String homePage( @RequestParam(value = "email", required = false) String email, @RequestParam(value = "token_type", required = false) String token) throws Exception {
+	public String homePage() throws Exception {
 			return "home";
 	}
 }

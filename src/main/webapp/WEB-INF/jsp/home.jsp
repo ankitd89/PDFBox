@@ -7,6 +7,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/upload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/home.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/mongoOp.js"></script>
+	<link href="${pageContext.request.contextPath}/resources/css/default.css"  rel="stylesheet">    
+
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -68,7 +70,9 @@
 								</button>
 
 							</div>
+
 						</div>
+
 					</div>
 					<div class="col-md-6"
 						style="position: relative; left: 0px; top: 0px; width: 550px; height: 30px">
@@ -137,6 +141,17 @@
 						
 					</div>
 				</div>
+
+
+<div id="openModal" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<div id="msg">
+		
+		</div>
+	</div>
+</div>
+
 				<div id="result" hidden="true"></div>
 			</div>
 		</div>

@@ -216,3 +216,9 @@ function showClickedFile(t)
 function logout() {
 	window.open("/login", "_self");
 }
+
+function alertMessage(heading, msg){
+	var modalbox=document.getElementById("msg");
+	modalbox.innerHTML="<h2>"+heading+"</h2>"+msg;
+	window.open("#openModal","_self"); 
+}
