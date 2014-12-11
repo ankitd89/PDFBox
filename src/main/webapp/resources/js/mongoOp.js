@@ -2,7 +2,8 @@ var url = "http://localhost:8080";
 
 function getEarningOnPaymentType()
 {
-	
+	var divBillDetails = document.getElementById("billDetailDiv");
+	divBillDetails.hidden=true;	
 	var selectId =document.getElementById("cboPayment");
 	var type=selectId.options[selectId.selectedIndex].value;
 	var paymentUrl = "/dropbox/"+email+"/getEarningsUponPaymentType/" + type;
@@ -38,6 +39,8 @@ function getEarningOnPaymentType()
 
 function getBillsOnCondition()
 {	
+	var divBillDetails = document.getElementById("billDetailDiv");
+	divBillDetails.hidden=true;	
 	var selectId = document.getElementById("cboAmount");
 	var cnd = selectId.options[selectId.selectedIndex].value;
 	var amtId = document.getElementById("txtAmount");
@@ -73,6 +76,8 @@ function getBillsOnCondition()
 
 function getBillsForDate()
 {
+	var divBillDetails = document.getElementById("billDetailDiv");
+	divBillDetails.hidden=true;	
 	var dateId = document.getElementById("txtDate"); 
 	var date = dateId.value;
 	var billUrl = url + "/dropbox/" + email + "/getBillsForDate/" + date;
