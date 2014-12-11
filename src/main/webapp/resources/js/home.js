@@ -239,6 +239,7 @@ function showClickedFile(t)
 			var billRef = dataStr[0].split(":");
 			var totalAmount= dataStr[1].split(":");
 			var cardType = dataStr[2].split(":");
+			var date=dataStr[3].split(":");
 			
 			if(billRef[1] == "null" || cardType[1] == "null" || totalAmount[1] == "0.0" )
 			{
@@ -262,6 +263,11 @@ function showClickedFile(t)
 			var cardLabel = document.getElementById("cardLabelId");
 			cardLabel.innerHTML=cardType[1];
 			cardDivId.appendChild(cardLabel);
+
+			var dateDivId= document.getElementById("dateDiv");
+			var dateLabel = document.getElementById("dateLabelId");
+			dateLabel.innerHTML=date[1];
+			dateDivId.appendChild(dateLabel);
 			
 			
 		},

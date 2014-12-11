@@ -46,6 +46,10 @@
         		<label id="cardTypeLabel"; style="position:absolute; top:10px;"> Card Type:</label>
         		<label id="cardLabelId"; style="position:absolute; left:150px; top:10px;"></label>
         	</div>
+        	<div id="dateDiv" class = "row-xs-1" style="border-style: solid; position: relative; left:25px; top:105px; height: 40px; width: 320px;">
+        		<label id="dateLabel"; style="position:absolute; top:10px;"> Date:</label>
+        		<label id="dateLabelId"; style="position:absolute; left:150px; top:10px;"></label>
+        	</div>
         </div>
       </div>
 			<div class="col-lg-4 "

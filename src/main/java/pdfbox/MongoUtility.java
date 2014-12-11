@@ -188,6 +188,6 @@ public class MongoUtility{
 			}
 		}
 		
-		return "The bill is:"+b.getBillRef() + "\nThis bill has total of:" + b.getTotalBillAmount() + "\npayed using:" + b.getPaymentMode() + "\n";
+		return "The bill is:"+b.getBillRef() + "\nThis bill has total of:" + b.getTotalBillAmount() + "\npayed using:" + b.getPaymentMode() + "\nand dated:" +b.getBillDate() +"\n";
 	}
 }
